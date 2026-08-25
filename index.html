@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Entre Orillas — Estudio creativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/varino" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="loader">
+    <div class="imgwrap">
+      <img src="images/map-bg.png" alt="">
+      <div class="scrim"></div>
+    </div>
+    <div class="loader-top mono">
+      <span>05°43'12"N — ENTREORILLAS.SYS</span>
+      <span id="loader-status">Calibrando sensores</span>
+    </div>
+    <div class="loader-inner">
+      <div class="loader-log mono" id="loader-log"></div>
+      <div class="loader-count"><span id="loader-num">0</span><small>%</small></div>
+    </div>
+  </div>
+
+  <aside class="map-sidebar" id="mapSidebar">
+    <div>
+      <div class="sidebar-title">Entre Orillas<em>.</em></div>
+      <div class="sidebar-eyebrow mono">Estudio creativo</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#"><span class="ic">◐</span>Mapa</a>
+      <a href="#"><span class="ic">✦</span>Proyectos</a>
+      <a href="#"><span class="ic">▲</span>Estudio</a>
+      <a href="#"><span class="ic">✉</span>Contacto</a>
+      <a href="#" target="_blank" rel="noopener"><span class="ic">◎</span>Instagram</a>
+      <a href="#" target="_blank" rel="noopener"><span class="ic">in</span>LinkedIn</a>
+    </nav>
+    <div class="sidebar-social mono">
+      <span>© 2026</span>
+      <span>Atelier Entre Orillas Inc.</span>
+    </div>
+  </aside>
+
+  <div class="map-stage" id="mapStage">
+    <div class="map-imgwrap" id="mapImgwrap">
+      <img class="map-img" id="mapImg" src="images/map-bg.png" alt="Vista aérea de una ciudad atravesada por un río al atardecer">
+    </div>
+    <div class="map-scrim"></div>
+    <div class="map-grid"></div>
+
+    <div class="map-logo" id="mapLogo">Entre Orillas<em>.</em></div>
+
+    <div class="map-topbar mono">
+      <span id="clock">01:10:50 GMT</span>
+    </div>
+
+    <div class="map-prompt" id="mapPrompt">
+      <p>Desliza para entrar en nuestro universo</p>
+    </div>
+
+    <div class="map-hint mono" id="mapHint">
+      <span>⇔ Arrastra para explorar el mapa</span>
+    </div>
+  </div>
+
+<div class="neon-cursor" id="neonCursor" aria-hidden="true"><span class="neon-dot"></span></div>
+<script src="js/main.js"></script>
+</body>
+</html>
