@@ -53,6 +53,10 @@
     <div class="map-scrim"></div>
     <div class="map-grid"></div>
 
+    <div class="map-markers" id="mapMarkers"></div>
+
+    <svg class="route-svg" id="routeSvg"></svg>
+
     <div class="map-logo" id="mapLogo">Entre Orillas<em>.</em></div>
 
     <div class="map-topbar mono">
@@ -69,6 +73,25 @@
   </div>
 
 <div class="neon-cursor" id="neonCursor" aria-hidden="true"><span class="neon-dot"></span></div>
+
+<div class="coord-panel" id="coordPanel">
+  <div class="coord-panel-header">
+    <span class="coord-panel-title mono">COORD DEBUG</span>
+    <span class="coord-panel-hint mono">Ctrl+D para activar</span>
+  </div>
+  <div class="coord-panel-body">
+    <div class="coord-current" id="coordCurrent">X: — %  Y: — %</div>
+    <div class="coord-actions">
+      <button class="coord-btn" id="coordCopy">Copiar</button>
+      <button class="coord-btn" id="coordClear">Limpiar</button>
+      <button class="coord-btn coord-btn-export" id="coordExport">Exportar todo</button>
+    </div>
+    <div class="coord-history" id="coordHistory"></div>
+  </div>
+</div>
+
+<div class="coord-grid" id="coordGrid"></div>
+
 <script src="js/main.js"></script>
 </body>
 </html>
