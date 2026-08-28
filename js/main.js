@@ -258,7 +258,7 @@ if(!isCoarse && neonCursor){
 
 /* ─── Map Markers ─── */
 
-const LOCATIONS = [
+const LOCATIONS = typeof PLANCHONES !== 'undefined' ? PLANCHONES : [
   { id:1,  x:76.3, y:53,   destX:76,   destY:46.8, name:'Planchón La bonga N°1' },
   { id:2,  x:72.2, y:56.2, destX:71.6, destY:47.4, name:'Planchón El rey David' },
   { id:3,  x:66.8, y:57.5, destX:67.1, destY:46.1, name:'Planchón Pompeya' },
@@ -294,19 +294,10 @@ function renderMarkers(){
     el.style.top  = ((loc.y - IMG_OFFSET) / IMG_SCALE) + '%';
     el.addEventListener('click', e => {
       e.stopPropagation();
-      if(pinnedRoute === loc.id){
-        pinnedRoute = null;
-        hideRoute(loc.id);
-        hideTooltip();
-      } else {
-        hideAllRoutes();
-        pinnedRoute = loc.id;
-        showRoute(loc.id);
-        showTooltip(el, loc);
-      }
+      window.location.href = `planchon.html?id=${loc.id}`;
     });
-    el.addEventListener('mouseenter', () => { if(!pinnedRoute) showRoute(loc.id); });
-    el.addEventListener('mouseleave', () => { if(!pinnedRoute) hideRoute(loc.id); });
+    el.addEventListener('mouseenter', () => { showRoute(loc.id); showTooltip(el, loc); });
+    el.addEventListener('mouseleave', () => { hideRoute(loc.id); hideTooltip(); });
     mapMarkersEl.appendChild(el);
     markerEls.push({ el, loc });
   });

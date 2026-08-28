@@ -11,7 +11,9 @@
   --line: rgba(245,1,249,0.18);
 }
 *{ box-sizing:border-box; margin:0; padding:0; }
-html, body{ height:100%; overflow:hidden; }
+html{ scroll-behavior:smooth; }
+html, body{ height:100%; }
+body{ overflow:hidden; }
 body{
   background:var(--bg);
   color:var(--cream);
