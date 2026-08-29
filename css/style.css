@@ -224,7 +224,7 @@ body.entered .map-markers{ opacity:1; }
   color:var(--cream); text-transform:uppercase;
   white-space:nowrap; pointer-events:none;
   box-shadow:0 0 12px rgba(245,1,249,0.25), 0 4px 20px rgba(0,0,0,0.5);
-  transform:translate(-50%,-100%) translateY(-14px);
+  transform:translate(-50%,0) translateY(14px);
   opacity:0; transition:opacity 0.2s ease;
 }
 .map-tooltip.visible{ opacity:1; }

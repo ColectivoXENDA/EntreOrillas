@@ -259,18 +259,18 @@ if(!isCoarse && neonCursor){
 /* ─── Map Markers ─── */
 
 const LOCATIONS = typeof PLANCHONES !== 'undefined' ? PLANCHONES : [
-  { id:1,  x:76.3, y:53,   destX:76,   destY:46.8, name:'Planchón La bonga N°1' },
-  { id:2,  x:72.2, y:56.2, destX:71.6, destY:47.4, name:'Planchón El rey David' },
-  { id:3,  x:66.8, y:57.5, destX:67.1, destY:46.1, name:'Planchón Pompeya' },
-  { id:4,  x:61.2, y:56.2, destX:61.7, destY:43.6, name:'Planchón El colombiano' },
-  { id:5,  x:55.9, y:52.2, destX:56.8, destY:41.5, name:'Planchón Los 2 hermanos' },
-  { id:6,  x:51.5, y:48.4, destX:52.2, destY:39.6, name:'Planchón El canario' },
-  { id:7,  x:47.2, y:45.5, destX:47.7, destY:37.4, name:'Planchón Dinastía tordecilla' },
-  { id:8,  x:42.2, y:44,   destX:42.3, destY:34.4, name:'Planchón La bala del Sinú' },
-  { id:9,  x:37.2, y:43.9, destX:37.2, destY:32,   name:'Planchón La estrella del Sinú' },
-  { id:10, x:33.2, y:44.3, destX:32.7, destY:31.6, name:'Planchón La esmeralda' },
-  { id:11, x:29,   y:45.7, destX:28.4, destY:33.3, name:'Planchón El minuto de Dios' },
-  { id:12, x:23.4, y:46.7, destX:23.7, destY:35.2, name:'Planchón La 26' },
+  { id:1,  x:76.3, y:53.5, destX:75.9, destY:45.8, name:'Planchón La bonga N°1' },
+  { id:2,  x:73.1, y:55.1, destX:72.8, destY:46.9, name:'Planchón El rey David' },
+  { id:3,  x:70.2, y:56.5, destX:70.1, destY:47,   name:'Planchón Pompeya' },
+  { id:4,  x:67.1, y:57.6, destX:67.4, destY:46.1, name:'Planchón El colombiano' },
+  { id:5,  x:63.5, y:56.2, destX:64.1, destY:44.5, name:'Planchón Los 2 hermanos' },
+  { id:6,  x:60,   y:54.8, destX:61,   destY:42.7, name:'Planchón El canario' },
+  { id:7,  x:56.6, y:52.2, destX:57.7, destY:41.1, name:'Planchón Dinastía tordecilla' },
+  { id:8,  x:53.9, y:49.7, destX:54.8, destY:40.3, name:'Planchón La bala del Sinú' },
+  { id:9,  x:51.4, y:47,   destX:52.2, destY:39.1, name:'Planchón La estrella del Sinú' },
+  { id:10, x:48.4, y:45.3, destX:49,   destY:38,   name:'Planchón La esmeralda' },
+  { id:11, x:44.8, y:44.1, destX:45.4, destY:36,   name:'Planchón El minuto de Dios' },
+  { id:12, x:41.4, y:43.9, destX:41.7, destY:33.9, name:'Planchón La 26' },
 ];
 
 const mapMarkersEl = document.getElementById('mapMarkers');
@@ -404,7 +404,7 @@ function positionTooltip(){
   if(!activeMarker || !tooltipEl) return;
   const r = activeMarker.getBoundingClientRect();
   tooltipEl.style.left = (r.left + r.width / 2) + 'px';
-  tooltipEl.style.top  = r.top + 'px';
+  tooltipEl.style.top  = r.bottom + 'px';
 }
 
 function hideAll(){

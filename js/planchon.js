@@ -9,10 +9,27 @@ else if(!isNaN(id)) item = data.find(p => p.id === id);
 
 if(!item){
   document.title = 'No encontrado — Entre Orillas';
-  root.innerHTML = `<div class="detail-notfound"><h1>Planchón no encontrado</h1><p class="mono" style="color:var(--muted);font-size:12px">ID "${params.get('id')||params.get('slug')||''}" no existe</p><a href="index.html" class="detail-nav-back">Volver al mapa</a><div class="detail-related" style="width:100%;max-width:600px;margin-top:20px"><h3>Elige un planchón</h3><div class="detail-related-grid">${data.map(p=>`<a class="detail-related-card" href="planchon.html?id=${p.id}"><div class="detail-related-num">#${p.id}</div><div class="detail-related-name">${p.name}</div></a>`).join('')}</div></div></div>`;
+  root.innerHTML = `<div class="detail-notfound"><h1>Planchón no encontrado</h1><p class="mono" style="color:var(--muted);font-size:12px">ID "${params.get('id')||params.get('slug')||''}" no existe</p><a href="index.html" class="detail-nav-back">Volver al mapa</a><div style="width:100%;max-width:600px;margin-top:20px"><h3 style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Elige un planchón</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px">${data.map(p=>`<a class="branch-node" href="planchon.html?id=${p.id}" style="border:1px solid var(--line);border-radius:8px;padding:12px 14px;text-decoration:none"><div class="branch-label" style="color:var(--amber);font-size:10px">#${p.id}</div><div style="font-size:13px;margin-top:4px;color:var(--cream)">${p.name}</div></a>`).join('')}</div></div></div>`;
 } else {
   document.title = `${item.name} — Entre Orillas`;
-  const others = data.filter(p => p.id !== item.id).slice(0,6);
+  const idx = data.findIndex(p => p.id === item.id);
+  const reversed = [...data].reverse();
+  const revIdx = reversed.findIndex(p => p.id === item.id);
+  const neighbors = [
+    revIdx > 0 ? reversed[revIdx - 1] : null,
+    item,
+    revIdx < reversed.length - 1 ? reversed[revIdx + 1] : null,
+  ].filter(Boolean);
+  const branchNodes = neighbors.map(p => {
+    const isCurrent = p.id === item.id;
+    const tag = isCurrent ? 'span' : 'a';
+    const href = isCurrent ? '' : ` href="planchon.html?id=${p.id}"`;
+    return `<${tag} class="branch-node${isCurrent ? ' is-current' : ''}"${href}>
+      <div class="branch-dot"></div>
+      <div class="branch-num">#${p.id}</div>
+      <div class="branch-label">${p.name}</div>
+    </${tag}>`;
+  }).join('<div class="branch-line"></div>');
   root.innerHTML = `
   <section class="detail-hero-full">
     <div class="detail-hero-full-media"><img src="${item.imagen}" alt="${item.name}" onerror="this.src='images/map-bg.png'"></div>
@@ -40,10 +57,10 @@ if(!item){
         <section class="detail-section reveal">
           <div class="detail-placeholder">Info placeholder — reemplaza <code>js/data/planchones.js</code> con texto real.</div>
         </section>
-        <section class="detail-related reveal">
-          <h3>Otros planchones</h3>
-          <div class="detail-related-grid">
-            ${others.map(p=>`<a class="detail-related-card" href="planchon.html?id=${p.id}"><div class="detail-related-num">#${p.id}</div><div class="detail-related-name">${p.name}</div></a>`).join('')}
+        <section class="detail-branch reveal">
+          <h3>Explora la ruta</h3>
+          <div class="branch-track">
+            ${branchNodes}
           </div>
         </section>
       </div>
