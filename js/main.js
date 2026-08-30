@@ -164,6 +164,32 @@ window.addEventListener('keydown', (e) => {
 });
 
 document.getElementById('mapPrompt').addEventListener('click', enterMap);
+function tryEnterMap(){
+  if(entered || transitioning) return false;
+  enterMap();
+  return true;
+}
+function bindMapa(){
+  const nav = document.getElementById('navMapa');
+  if(!nav) return;
+  nav.style.pointerEvents = 'auto';
+  nav.addEventListener('click', e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    const loaderHidden = loader.classList.contains('hide');
+    if(!loaderHidden){
+      loader.classList.add('hide');
+      setTimeout(()=> tryEnterMap(), 200);
+      return;
+    }
+    if(!tryEnterMap()){
+      if(!entered) setTimeout(()=> tryEnterMap(), 550);
+      else { targetX = 0; targetY = 0; kickSmooth(); updateMarkerPositions(); }
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', bindMapa);
+if(document.readyState !== 'loading') bindMapa();
 
 function onPointerDown(e){
   if(!dragEnabled) return;
