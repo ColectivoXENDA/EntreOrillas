@@ -87,6 +87,9 @@ function smoothTick(){
     dragX = targetX; dragY = targetY;
     renderTransform();
     updateMarkerPositions();
+    updateLandmarkPositions();
+  updateRegionLabelPositions();
+  updateRondaPositions();
     rafDrag = null;
     return;
   }
@@ -94,6 +97,9 @@ function smoothTick(){
   dragY += dy * 0.13;
   renderTransform();
   updateMarkerPositions();
+  updateLandmarkPositions();
+  updateRegionLabelPositions();
+  updateRondaPositions();
   rafDrag = requestAnimationFrame(smoothTick);
 }
 function kickSmooth(){ if(!rafDrag) rafDrag = requestAnimationFrame(smoothTick); }
@@ -114,6 +120,9 @@ function enterMap(){
   mapImg.style.transition = 'transform 1.2s cubic-bezier(.16,.8,.24,1)';
   renderTransform();
   updateMarkerPositions();
+  updateLandmarkPositions();
+  updateRegionLabelPositions();
+  updateRondaPositions();
   setTimeout(() => {
     mapImg.style.transition = 'none';
     setDragEnabled(true);
@@ -132,6 +141,9 @@ function exitMap(){
   mapImg.style.transition = 'transform 1.2s cubic-bezier(.16,.8,.24,1)';
   renderTransform();
   updateMarkerPositions();
+  updateLandmarkPositions();
+  updateRegionLabelPositions();
+  updateRondaPositions();
   hideAll();
   if(rafDrag){ cancelAnimationFrame(rafDrag); rafDrag = null; }
   setTimeout(() => {
@@ -184,7 +196,7 @@ function bindMapa(){
     }
     if(!tryEnterMap()){
       if(!entered) setTimeout(()=> tryEnterMap(), 550);
-      else { targetX = 0; targetY = 0; kickSmooth(); updateMarkerPositions(); }
+      else { targetX = 0; targetY = 0; kickSmooth(); updateMarkerPositions(); updateLandmarkPositions(); updateRegionLabelPositions(); updateRondaPositions(); }
     }
   });
 }
@@ -211,6 +223,9 @@ function onPointerMove(e){
   targetY = clamp(rawY, -bounds.y, bounds.y);
   lastTX = targetX; lastTY = targetY;
   updateMarkerPositions();
+  updateLandmarkPositions();
+  updateRegionLabelPositions();
+  updateRondaPositions();
   kickSmooth();
 }
 
@@ -285,18 +300,18 @@ if(!isCoarse && neonCursor){
 /* ─── Map Markers ─── */
 
 const LOCATIONS = typeof PLANCHONES !== 'undefined' ? PLANCHONES : [
-  { id:1,  x:76.3, y:53.5, destX:75.9, destY:45.8, name:'Planchón La bonga N°1' },
-  { id:2,  x:73.1, y:55.1, destX:72.8, destY:46.9, name:'Planchón El rey David' },
-  { id:3,  x:70.2, y:56.5, destX:70.1, destY:47,   name:'Planchón Pompeya' },
-  { id:4,  x:67.1, y:57.6, destX:67.4, destY:46.1, name:'Planchón El colombiano' },
-  { id:5,  x:63.5, y:56.2, destX:64.1, destY:44.5, name:'Planchón Los 2 hermanos' },
-  { id:6,  x:60,   y:54.8, destX:61,   destY:42.7, name:'Planchón El canario' },
-  { id:7,  x:56.6, y:52.2, destX:57.7, destY:41.1, name:'Planchón Dinastía tordecilla' },
-  { id:8,  x:53.9, y:49.7, destX:54.8, destY:40.3, name:'Planchón La bala del Sinú' },
-  { id:9,  x:51.4, y:47,   destX:52.2, destY:39.1, name:'Planchón La estrella del Sinú' },
-  { id:10, x:48.4, y:45.3, destX:49,   destY:38,   name:'Planchón La esmeralda' },
-  { id:11, x:44.8, y:44.1, destX:45.4, destY:36,   name:'Planchón El minuto de Dios' },
-  { id:12, x:41.4, y:43.9, destX:41.7, destY:33.9, name:'Planchón La 26' },
+  { id:1,  x:71.8, y:56.4, destX:71.2, destY:47.3, name:'Planchón La bonga N°1' },
+  { id:2,  x:69.1, y:57.4, destX:69,   destY:46.5, name:'Planchón El rey David' },
+  { id:3,  x:66.6, y:57.1, destX:66.7, destY:45.3, name:'Planchón Pompeya' },
+  { id:4,  x:64.1, y:57.5, destX:64.7, destY:45,   name:'Planchón El colombiano' },
+  { id:5,  x:61.1, y:56.6, destX:61.7, destY:43.6, name:'Planchón Los 2 hermanos' },
+  { id:6,  x:59.7, y:55.5, destX:57.2, destY:41.5, name:'Planchón El canario' },
+  { id:7,  x:56.2, y:52.3, destX:54.5, destY:40.5, name:'Planchón Dinastía tordecilla' },
+  { id:8,  x:53.9, y:50.4, destX:52,   destY:38.8, name:'Planchón La bala del Sinú' },
+  { id:9,  x:52.4, y:49.3, destX:50.7, destY:38.4, name:'Planchón La estrella del Sinú' },
+  { id:10, x:49.1, y:46.2, destX:47.2, destY:37.2, name:'Planchón La esmeralda' },
+  { id:11, x:43.8, y:44.6, destX:43.7, destY:34.9, name:'Planchón El minuto de Dios' },
+  { id:12, x:40.4, y:44.3, destX:42.4, destY:33.9, name:'Planchón La 26' },
 ];
 
 const mapMarkersEl = document.getElementById('mapMarkers');
@@ -307,7 +322,6 @@ const IMG_SCALE  = 1.12;
 const markerEls = [];
 const routeGroups = {};
 let activeMarker = null;
-let pinnedRoute = null;
 let tooltipEl = null;
 
 function renderMarkers(){
@@ -322,8 +336,8 @@ function renderMarkers(){
       e.stopPropagation();
       window.location.href = `planchon.html?id=${loc.id}`;
     });
-    el.addEventListener('mouseenter', () => { showRoute(loc.id); showTooltip(el, loc); });
-    el.addEventListener('mouseleave', () => { hideRoute(loc.id); hideTooltip(); });
+    el.addEventListener('mouseenter', () => { showTooltip(el, loc); });
+    el.addEventListener('mouseleave', () => { hideTooltip(); });
     mapMarkersEl.appendChild(el);
     markerEls.push({ el, loc });
   });
@@ -332,7 +346,7 @@ function renderMarkers(){
 function renderRoutes(){
   LOCATIONS.forEach(loc => {
     const g = document.createElementNS(SVG_NS, 'g');
-    g.classList.add('route-group');
+    g.classList.add('route-group', 'visible');
     g.dataset.id = loc.id;
 
     const line = document.createElementNS(SVG_NS, 'line');
@@ -352,32 +366,6 @@ function renderRoutes(){
     routeSvg.appendChild(g);
     routeGroups[loc.id] = { g, line, dot, label };
   });
-}
-
-function showRoute(id){
-  const group = routeGroups[id];
-  if(group) group.g.classList.add('visible');
-}
-
-function hideRoute(id){
-  const group = routeGroups[id];
-  if(group) group.g.classList.remove('visible');
-}
-
-function hideAllRoutes(){
-  Object.values(routeGroups).forEach(g => g.g.classList.remove('visible'));
-  pinnedRoute = null;
-}
-
-function toggleRoute(id){
-  if(pinnedRoute === id){
-    hideRoute(id);
-    pinnedRoute = null;
-  } else {
-    hideAllRoutes();
-    pinnedRoute = id;
-    showRoute(id);
-  }
 }
 
 function updateRoutePositions(){
@@ -435,7 +423,6 @@ function positionTooltip(){
 
 function hideAll(){
   hideTooltip();
-  hideAllRoutes();
 }
 
 function updateMarkerPositions(){
@@ -457,11 +444,164 @@ document.addEventListener('click', e => {
   if(!e.target.closest('.map-marker')) hideAll();
 });
 
+/* ─── Landmarks ─── */
+
+const LANDMARKS = [
+  { x:76.9, y:44,   name:'Universidad del Sinú' },
+  { x:58.6, y:37.7, name:'Centro verde' },
+  { x:68.1, y:58,   name:'Plaza cultural María Varilla' },
+  { x:62.9, y:58.2, name:'Muelle turístico de Montería' },
+  { x:43.9, y:53.9, name:'Plaza mayor de Montería' },
+  { x:43.1, y:59.5, name:'Parque principal de Montería' },
+  { x:30.9, y:45.3, name:'Malecón río Sinú Montería' },
+  { x:20.1, y:40.5, name:'Puente Metálico Gustavo Rojas Pinilla' },
+  { x:79.2, y:46.2, name:'Puente Segundo Centenario' },
+];
+
+const landmarkEls = [];
+let landmarkTooltip = null;
+
+function renderLandmarks(){
+  LANDMARKS.forEach(lm => {
+    const el = document.createElement('div');
+    el.className = 'map-landmark';
+    el.innerHTML = '<div class="landmark-pin"><div class="landmark-pin-dot"></div></div>';
+    el.style.left = ((lm.x - IMG_OFFSET) / IMG_SCALE) + '%';
+    el.style.top  = ((lm.y - IMG_OFFSET) / IMG_SCALE) + '%';
+    el.addEventListener('mouseenter', () => {
+      if(!landmarkTooltip){
+        landmarkTooltip = document.createElement('div');
+        landmarkTooltip.className = 'map-tooltip landmark-tooltip';
+        document.body.appendChild(landmarkTooltip);
+      }
+      landmarkTooltip.textContent = lm.name;
+      landmarkTooltip.classList.add('visible');
+      const r = el.getBoundingClientRect();
+      landmarkTooltip.style.left = (r.left + r.width / 2) + 'px';
+      landmarkTooltip.style.top  = r.bottom + 'px';
+    });
+    el.addEventListener('mouseleave', () => {
+      if(landmarkTooltip) landmarkTooltip.classList.remove('visible');
+    });
+    mapMarkersEl.appendChild(el);
+    landmarkEls.push({ el, lm });
+  });
+}
+
+function updateLandmarkPositions(){
+  const wrapW = mapImgwrap.clientWidth;
+  const wrapH = mapImgwrap.clientHeight;
+  const dx = reduced ? 0 : dragX;
+  const dy = reduced ? 0 : dragY;
+  landmarkEls.forEach(({ el, lm }) => {
+    const imgPxX = (lm.x / 100) * wrapW;
+    const imgPxY = (lm.y / 100) * wrapH;
+    const screenX = wrapW/2 - (wrapW/2 - imgPxX) * scale + dx;
+    const screenY = wrapH/2 - (wrapH/2 - imgPxY) * scale + dy;
+    el.style.left = screenX + 'px';
+    el.style.top  = screenY + 'px';
+  });
+}
+
+/* ─── Etiquetas de margen (texto grande, sin pin) ─── */
+
+const REGION_LABELS = [
+  { x:51.5, y:17.5, name:'Margen izquierda' },
+  { x:48.6, y:74.4, name:'Margen derecha' },
+];
+
+const regionLabelEls = [];
+
+function renderRegionLabels(){
+  REGION_LABELS.forEach(rl => {
+    const el = document.createElement('div');
+    el.className = 'map-region-label';
+    el.textContent = rl.name;
+    mapMarkersEl.appendChild(el);
+    regionLabelEls.push({ el, rl });
+  });
+}
+
+function updateRegionLabelPositions(){
+  const wrapW = mapImgwrap.clientWidth;
+  const wrapH = mapImgwrap.clientHeight;
+  const dx = reduced ? 0 : dragX;
+  const dy = reduced ? 0 : dragY;
+  regionLabelEls.forEach(({ el, rl }) => {
+    const imgPxX = (rl.x / 100) * wrapW;
+    const imgPxY = (rl.y / 100) * wrapH;
+    const screenX = wrapW/2 - (wrapW/2 - imgPxX) * scale + dx;
+    const screenY = wrapH/2 - (wrapH/2 - imgPxY) * scale + dy;
+    el.style.left = screenX + 'px';
+    el.style.top  = screenY + 'px';
+  });
+}
+
+/* ─── Rondas del Sinú (rutas peatonales, línea verde) ─── */
+
+const RONDA_SINU = [
+  { x:21.9, y:47.5 }, { x:29.7, y:46.6 }, { x:35.5, y:45.6 }, { x:40.6, y:45.1 },
+  { x:46.2, y:46   }, { x:49.7, y:47.8 }, { x:54.4, y:52.3 }, { x:58.6, y:55.9 },
+  { x:62.9, y:58.7 }, { x:68.1, y:59.1 }, { x:71.6, y:59.4 }, { x:75.1, y:57.5 },
+  { x:78.4, y:52.9 }, { x:81.4, y:49.3 },
+];
+const RONDA_SINU_OCCIDENTE = [
+  { x:56.3, y:39.2 }, { x:56.6, y:40.9 }, { x:60,   y:41.3 },
+  { x:62.6, y:42.4 }, { x:64.9, y:43.8 }, { x:66.3, y:44.9 },
+];
+const RONDAS = [
+  { name:'Ronda del Sinú', points:RONDA_SINU },
+  { name:'Ronda del Sinú de Occidente', points:RONDA_SINU_OCCIDENTE },
+];
+const rondaPolylines = [];
+
+function renderRondas(){
+  RONDAS.forEach(({ name, points }) => {
+    const poly = document.createElementNS(SVG_NS, 'polyline');
+    poly.classList.add('ronda-path');
+    routeSvg.appendChild(poly);
+
+    const label = document.createElementNS(SVG_NS, 'text');
+    label.classList.add('ronda-label');
+    label.textContent = name;
+    routeSvg.appendChild(label);
+
+    rondaPolylines.push({ poly, label, points });
+  });
+}
+
+function updateRondaPositions(){
+  const wrapW = mapImgwrap.clientWidth;
+  const wrapH = mapImgwrap.clientHeight;
+  const dx = reduced ? 0 : dragX;
+  const dy = reduced ? 0 : dragY;
+  rondaPolylines.forEach(({ poly, label, points }) => {
+    const coords = points.map(p => {
+      const imgPxX = (p.x / 100) * wrapW;
+      const imgPxY = (p.y / 100) * wrapH;
+      return {
+        x: wrapW/2 - (wrapW/2 - imgPxX) * scale + dx,
+        y: wrapH/2 - (wrapH/2 - imgPxY) * scale + dy
+      };
+    });
+    poly.setAttribute('points', coords.map(c => `${c.x},${c.y}`).join(' '));
+    const mid = coords[Math.floor(coords.length / 2)];
+    label.setAttribute('x', mid.x);
+    label.setAttribute('y', mid.y - 12);
+  });
+}
+
 renderMarkers();
 renderRoutes();
+renderLandmarks();
+renderRegionLabels();
+renderRondas();
 updateMarkerPositions();
 updateRoutePositions();
-window.addEventListener('resize', () => { updateMarkerPositions(); updateRoutePositions(); });
+updateLandmarkPositions();
+updateRegionLabelPositions();
+updateRondaPositions();
+window.addEventListener('resize', () => { updateMarkerPositions(); updateRoutePositions(); updateLandmarkPositions(); updateRegionLabelPositions(); updateRondaPositions(); });
 
 /* ─── Coord Debug Mode ─── */
 
@@ -562,3 +702,21 @@ window.addEventListener('keydown', e => {
 
 mapStageEl.addEventListener('click', onDebugClick, true);
 mapStageEl.addEventListener('mousemove', onDebugMove, { passive:true });
+
+/* ─── Debug: alternar mapa de fondo ─── */
+
+const MAP_BACKGROUNDS = ['images/map-bg.png', 'images/map-bg2.png'];
+let mapBgIndex = 0;
+
+function toggleMapBackground(){
+  mapBgIndex = (mapBgIndex + 1) % MAP_BACKGROUNDS.length;
+  mapImg.src = MAP_BACKGROUNDS[mapBgIndex];
+  coordCurrent.textContent = `Mapa: ${MAP_BACKGROUNDS[mapBgIndex]}`;
+}
+
+window.addEventListener('keydown', e => {
+  if(e.ctrlKey && e.key === 'm'){
+    e.preventDefault();
+    toggleMapBackground();
+  }
+});
