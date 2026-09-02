@@ -31,8 +31,19 @@ body.detail-body{ background:var(--bg); color:var(--cream); min-height:100vh; he
 .detail-meta-label{ font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
 .detail-meta-value{ font-size:13px; color:var(--cream); overflow-wrap:break-word; word-wrap:break-word; }
 .detail-section{ margin-bottom:36px; }
-.detail-section h2{ font-family:'Fraunces',serif; font-size:22px; margin-bottom:12px; }
-.detail-section p{ font-size:14px; line-height:1.7; color:var(--cream); opacity:0.85; }
+.detail-section h2{ font-family:'Fraunces',serif; font-size:clamp(24px,2.8vw,32px); margin-bottom:14px; }
+.detail-section p{ font-size:16px; line-height:1.75; color:var(--cream); opacity:0.88; }
+.origin-timeline h2{ font-size:clamp(24px,2.8vw,32px); letter-spacing:0.02em; margin-bottom:20px; }
+.origin-timeline h2::after{ content:''; display:block; width:40px; height:2px; background:var(--amber); margin-top:10px; }
+.timeline{ position:relative; border-left:1px solid var(--line); padding-left:28px; margin-left:6px; }
+.timeline-item{ position:relative; margin-bottom:28px; padding:14px 16px; background:rgba(245,1,249,0.03); border:1px solid transparent; border-radius:8px; transition:border-color 0.2s ease, background 0.2s ease; }
+.timeline-item:hover{ border-color:var(--line); background:rgba(245,1,249,0.05); }
+.timeline-item:last-child{ margin-bottom:0; }
+.timeline-dot{ position:absolute; left:-34px; top:18px; width:12px; height:12px; border-radius:50%; border:2px solid var(--amber); background:var(--bg); box-shadow:0 0 8px var(--amber), 0 0 16px rgba(245,1,249,0.3); }
+.timeline-year{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin-bottom:8px; display:block; }
+.timeline-item p{ margin-bottom:10px; }
+.timeline-item p:last-child{ margin-bottom:0; }
+.timeline-item em{ color:var(--cream); font-style:italic; }
 .detail-gallery{ display:grid; grid-template-columns:1fr; gap:12px; }
 .detail-gallery img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:8px; border:1px solid var(--line); background:var(--bg-2); cursor:zoom-in; transition:transform 0.2s ease, border-color 0.2s ease; }
 .detail-gallery img:hover{ transform:scale(1.01); border-color:var(--amber); }
