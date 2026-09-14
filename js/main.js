@@ -1,5 +1,59 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Pantalla de carga: forzar siempre el inicio de la página al recargar
+   (scrollRestoration manual) y ocultar el loader una vez el contenido está listo. */
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+const loaderEl = document.getElementById('loader');
+const loaderLogoEl = document.querySelector('.loader-logo');
+const brandLogoEl = document.querySelector('.brand-logo');
+
+const salidaLoader = () => {
+  /* El isotipo vuela desde el centro hasta la posición del brand (arriba-
+     izquierda): se mide el destino con FLIP y se aplica translate + scale.
+     Simultáneamente el fondo del loader se desvanece y el contenido queda al
+     descubierto. */
+  if(loaderLogoEl && brandLogoEl && !reduceMotion){
+    /* Detener la animación de respiración y fijar el logo visible: si queda
+       animando, el keyframe pisa el transform de la transición. */
+    loaderLogoEl.style.animation = 'none';
+    loaderLogoEl.style.opacity = '1';
+    void loaderLogoEl.offsetWidth; // forzar reflow para medir el estado final
+
+    const inicio = loaderLogoEl.getBoundingClientRect();
+    const destino = brandLogoEl.getBoundingClientRect();
+    const dx = (destino.left + destino.width / 2) - (inicio.left + inicio.width / 2);
+    const dy = (destino.top + destino.height / 2) - (inicio.top + inicio.height / 2);
+    const escala = destino.width / inicio.width;
+    loaderLogoEl.style.transition = 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)';
+    requestAnimationFrame(() => {
+      loaderLogoEl.style.transform = `translate(${dx}px, ${dy}px) scale(${escala})`;
+    });
+    /* El fade de lo demás arranca cuando el isotipo aterriza (después del
+       vuelo de 0.7s): llega a su ubicación en la cabecera y luego todo
+       se devela con el fundido del loader. */
+    setTimeout(() => {
+      loaderEl.classList.add('oculto');
+      document.body.classList.add('revelado');
+      loaderEl.addEventListener('transitionend', () => loaderEl.remove(), { once:true });
+    }, 700);
+    setTimeout(() => loaderLogoEl.remove(), 760);
+  } else {
+    loaderEl.classList.add('oculto');
+    document.body.classList.add('revelado');
+    loaderEl.addEventListener('transitionend', () => loaderEl.remove(), { once:true });
+  }
+};
+
+const MINIMO_LOADER = 1500;
+if(loaderEl && document.readyState === 'complete'){
+  setTimeout(salidaLoader, MINIMO_LOADER);
+} else {
+  window.addEventListener('load', () => setTimeout(salidaLoader, MINIMO_LOADER));
+  setTimeout(() => { if(loaderEl && !loaderEl.classList.contains('oculto')) salidaLoader(); }, 3500);
+}
+
 /* Utilidades compartidas */
 function clamp01(v){ return Math.min(Math.max(v, 0), 1); }
 function docTop(el){ return el.getBoundingClientRect().top + window.scrollY; }
@@ -22,6 +76,83 @@ function onScroll(fn){
 document.querySelectorAll('.planchon-panel').forEach(panel => {
   document.body.appendChild(panel);
 });
+
+/* Scroll suave: el body toma la altura real del contenido y #recorrido viaja
+   por transform con inercia (lerp). Se aplica también en móvil; solo se
+   desactiva con prefers-reduced-motion. La barra nativa queda oculta por CSS
+   (scrollbar-width/::-webkit-scrollbar), el scroll sigue funcionando. */
+const suaveScrollEl = document.getElementById('recorrido');
+/* El motor de scroll suave entrega el scrub de las escenas 3D con pin manual;
+   el módulo basado en position:sticky queda inactivo mientras esté activo. */
+let suave3DActivo = false;
+
+if(suaveScrollEl && !reduceMotion){
+  /* El clip del video es position:fixed y cubre el viewport. Si queda dentro
+     del wrapper trasladado, el transform lo convierte en "fijo relativo al
+     ancestro" y deja de cubrir la pantalla. Se cuelga directo de <body>, como
+     los paneles. */
+  const clipStageFijo = document.getElementById('clipStage');
+  if(clipStageFijo) document.body.appendChild(clipStageFijo);
+
+  suaveScrollEl.classList.add('suave');
+
+  function fijarAlturaScroll(){
+    document.body.style.height = `${suaveScrollEl.scrollHeight}px`;
+  }
+  fijarAlturaScroll();
+  window.addEventListener('resize', fijarAlturaScroll);
+  new ResizeObserver(fijarAlturaScroll).observe(suaveScrollEl);
+
+  /* Escenas 3D: con el wrapper trasladado, position:sticky deja de fijar el
+     pin. Se reemplaza por un pin manual: cada escena (250vh) queda "pegada"
+     arriba durante sus primeros ~150vh — mientras el video gira — y luego
+     vuelve a desplazarse, replicando el sticky nativo. */
+  const escenas3DSuave = [...document.querySelectorAll('.planchon-3d-escena')]
+    .map(escena => {
+      const sticky = escena.querySelector('.planchon-3d-sticky');
+      const video = escena.querySelector('video');
+      return { escena, sticky, video };
+    })
+    .filter(item => item.sticky && item.video);
+
+  if(escenas3DSuave.length){
+    suave3DActivo = true;
+    escenas3DSuave.forEach(item => {
+      /* El sticky nativo interferiría con el transform del wrapper: se vuelve
+         relativo y el pin lo maneja el motor con translate. */
+      item.sticky.style.position = 'relative';
+    });
+
+    /* Pin manual por frame: p crece de 0 a 1 mientras la escena (250vh) pasa
+       sus primeros ~150vh por la pantalla. El sticky se traslada exactamente
+       lo que le falta para quedarse pegado al tope y, al terminar el pin,
+       sigue el desplazamiento natural de la escena. */
+    function pinEscenas3D(){
+      escenas3DSuave.forEach(item => {
+        const rect = item.escena.getBoundingClientRect();
+        const rango = Math.max(1, item.escena.offsetHeight - window.innerHeight);
+        const p = clamp01(-rect.top / rango);
+        item.sticky.style.transform = `translate3d(0, ${p * rango}px, 0)`;
+        if(item.video.duration){
+          item.video.currentTime = p * item.video.duration;
+        }
+      });
+    }
+  }
+
+  let actualScroll = window.scrollY;
+  const factorSuave = 0.09; // más bajo = más flotante
+
+  const pasoScroll = () => {
+    const objetivo = window.scrollY;
+    actualScroll += (objetivo - actualScroll) * factorSuave;
+    if(Math.abs(objetivo - actualScroll) < 0.05) actualScroll = objetivo;
+    suaveScrollEl.style.transform = `translate3d(0, ${-actualScroll}px, 0)`;
+    if(suave3DActivo) pinEscenas3D();
+    requestAnimationFrame(pasoScroll);
+  };
+  requestAnimationFrame(pasoScroll);
+}
 
 /* Ícono de volumen: alterna entre normal y silenciado */
 const soundToggle = document.getElementById('soundToggle');
@@ -77,15 +208,16 @@ if(escenaVideoEl && clipVideoEl){
     const total = escenaVideoEl.offsetHeight - window.innerHeight;
     const progreso = total > 0 ? clamp01(-rect.top / total) : 0;
 
-    // Fundido de entrada/salida basado en la distancia real a la pantalla:
-    // así el video no aparece "de golpe" ya congelado en el frame 1 mientras
-    // todavía falta scroll para llegar a él.
-    const margen = window.innerHeight * 0.5;
+    // Fundido ligado al progreso del video: entra en el primer tramo y sale en
+    // el último. Así nunca se ve el video "congelado/pausado" en el frame
+    // inicial mientras llega a la pantalla, ni clavado en el frame final
+    // cuando ya terminó.
+    const fadeFraccion = 0.14;
     let opacidad = 1;
-    if(rect.top > 0){
-      opacidad = clamp01(1 - rect.top / margen);
-    } else if(rect.bottom < window.innerHeight){
-      opacidad = clamp01(rect.bottom / margen);
+    if(progreso < fadeFraccion){
+      opacidad = clamp01(progreso / fadeFraccion);
+    } else if(progreso > 1 - fadeFraccion){
+      opacidad = clamp01((1 - progreso) / fadeFraccion);
     }
 
     clipStageEl.style.opacity = opacidad.toFixed(3);
@@ -251,6 +383,7 @@ const escenas3D = [...document.querySelectorAll('.planchon-3d-escena')]
 
 if(escenas3D.length){
   function updateEscenas3D(){
+    if(suave3DActivo) return;
     escenas3D.forEach(({ escena, video }) => {
       const rect = escena.getBoundingClientRect();
       const total = escena.offsetHeight - window.innerHeight;

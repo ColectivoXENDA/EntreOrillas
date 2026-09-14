@@ -15,7 +15,11 @@
 }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; }
+html{
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+html::-webkit-scrollbar{ display:none; }
 body{
   background:var(--bg);
   color:var(--cream);
@@ -26,6 +30,31 @@ body{
 ::selection{ background:var(--magenta-1); color:var(--bg); }
 img{ max-width:100%; display:block; }
 h1, h2, h3{ font-family:var(--serif); font-weight:400; line-height:1.05; letter-spacing:0.01em; }
+
+/* ================= Pantalla de carga ================= */
+.loader{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(55% 55% at 20% 15%, rgba(245,1,249,0.11), transparent 78%),
+    radial-gradient(55% 55% at 80% 18%, rgba(73,79,255,0.11), transparent 78%),
+    radial-gradient(60% 60% at 15% 72%, rgba(134,38,252,0.09), transparent 78%),
+    radial-gradient(60% 60% at 82% 82%, rgba(11,75,99,0.20), transparent 78%),
+    var(--bg);
+  transition:opacity 0.9s ease 0.05s, visibility 0.9s ease 0.05s;
+}
+.loader.oculto{ opacity:0; visibility:hidden; pointer-events:none; }
+.loader-logo{
+  width:clamp(72px,14vw,120px); height:auto; opacity:0;
+  animation:loader-breathe 1.8s ease-in-out infinite 0.3s;
+  will-change:transform;
+  filter:drop-shadow(0 0 26px rgba(245,1,249,0.45))
+         drop-shadow(0 0 60px rgba(134,38,252,0.3));
+}
+@keyframes loader-breathe{
+  0%, 100%{ transform:scale(1); opacity:0.8; }
+  50%{ transform:scale(1.07); opacity:1; }
+}
 
 /* Resplandor ambiental fijo detrás de todo el contenido */
 body::before{
@@ -39,10 +68,43 @@ body::before{
 }
 main{ position:relative; z-index:1; }
 
+/* Scroll suave: en modo activo el contenido viaja por transform dentro de un
+   contenedor fijo y el body solo aporta la altura de scroll. El div que
+   oculta/barra mantiene scroll invisible. */
+#recorrido.suave{
+  position:fixed; top:0; left:0; right:0; width:100%;
+  will-change:transform;
+}
+
 /* Partículas flotantes de fondo (recorren toda la página) */
 .particles-global{
   position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
 }
+
+/* Revelado tras el loader: primero las partículas del fondo y luego el título
+   del hero entran en secuencia con sus propios fundidos. */
+@keyframes entra-particulas{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+#particles{ opacity:0; }
+body.revelado #particles{ animation:entra-particulas 0.9s ease 0.15s both; }
+@keyframes entra-titulo{
+  from{ opacity:0; transform:translateY(16px); filter:blur(6px); }
+  to{ opacity:1; transform:translateY(0); filter:blur(0); }
+}
+@keyframes entra-texto{
+  from{ opacity:0; transform:translateY(12px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+@keyframes entra-indicador{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+body.revelado #presentacion .logo-hero{ animation:entra-titulo 0.8s ease 0.9s both; }
+body.revelado #presentacion .eyebrow,
+body.revelado #presentacion .descripcion{ animation:entra-texto 0.8s ease 1.65s both; }
+body.revelado #presentacion .scroll-indicator{ animation:entra-indicador 0.8s ease 1.65s both; }
 
 .sr-only{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
@@ -140,15 +202,29 @@ main{ position:relative; z-index:1; }
   color:var(--magenta-2); margin-bottom:14px;
 }
 
-/* Reveal al hacer scroll: desvanecimiento + desenfoque, igual para todo el texto del sitio */
-section, .planchon{
-  opacity:0; transform:translateY(28px); filter:blur(6px);
+/* Reveal al hacer scroll: cada escena entra con su propia transición para
+   evitar que todo baje igual. Los <section> aparecen por separado; el
+   contenedor .planchon se mantiene siempre visible para no interferir con el
+   pin 3D. */
+section{
+  opacity:0;
   transition:opacity 0.9s ease, transform 0.9s ease, filter 0.9s ease;
 }
-section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:blur(0); }
+section.visible{ opacity:1; transform:none; filter:none; }
+.planchon{ opacity:1; transform:none; filter:none; }
 #presentacion{ opacity:1; transform:none; filter:none; }
+
+/* Variantes de entrada por escena y por planchón (par/impar) */
+.planchon:nth-child(odd) section:not(.visible){ transform:translateX(-48px); }
+.planchon:nth-child(even) section:not(.visible){ transform:translateX(48px); }
+section.planchon-intro:not(.visible){ transform:translateY(56px); }
+section.planchon-3d-escena:not(.visible){ transform:scale(0.86); filter:blur(16px); }
+section.planchon-360-escena:not(.visible){ transform:scale(1.05); }
+section.planchon-360-escena:not(.visible) .planchon-360-btn{ transform:translateY(20px); }
+.planchon:nth-child(even) section.planchon-intro:not(.visible){ transform:translateY(56px); }
+
 @media (prefers-reduced-motion: reduce){
-  section, .planchon{ filter:none; }
+  section{ filter:none; }
 }
 
 /* ================= 1. Presentación ================= */
@@ -166,6 +242,14 @@ section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:b
   font-size:clamp(46px,13vw,96px);
   background:var(--gradient-brand);
   -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+#presentacion .logo-hero{
+  position:relative; z-index:1;
+  max-width:min(1060px, 82vw);
+  width:100%; height:auto;
+  filter:drop-shadow(0 12px 40px rgba(0,0,0,0.45))
+         drop-shadow(0 0 34px rgba(134,38,252,0.35))
+         drop-shadow(0 0 80px rgba(245,1,249,0.22));
 }
 #presentacion .subtitulo{
   position:relative; z-index:1;
@@ -329,11 +413,11 @@ section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:b
   padding:100px 36px 40px; overflow-y:auto;
   background:linear-gradient(160deg, rgba(9,10,79,0.94), rgba(6,10,30,0.98));
   border-left:1px solid var(--line);
-  box-shadow:-24px 0 60px rgba(6,10,30,0.6);
+  box-shadow:none;
   transform:translateX(100%);
   transition:transform 0.45s cubic-bezier(.16,.8,.24,1);
 }
-.planchon-panel.abierto{ transform:translateX(0); }
+.planchon-panel.abierto{ transform:translateX(0); box-shadow:-24px 0 60px rgba(6,10,30,0.6); }
 .planchon-panel-cerrar{ position:absolute; top:24px; right:24px; }
 .planchon-panel-contenido h3{
   font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
@@ -357,7 +441,7 @@ section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:b
   overflow:hidden;
 }
 .planchon-3d-video{
-  width:min(80vw,760px); border-radius:24px;
+  width:min(88vw,900px); border-radius:24px;
   border:1px solid var(--line); box-shadow:0 30px 80px rgba(6,10,30,0.6);
   background:var(--bg-2);
 }
@@ -385,6 +469,7 @@ section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:b
   appearance:none; cursor:not-allowed; border:1px dashed var(--line); border-radius:999px;
   padding:12px 32px; background:transparent; color:var(--muted);
   font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+  transition:transform 0.9s ease, opacity 0.9s ease;
 }
 
 @media (max-width:820px){
@@ -399,12 +484,13 @@ section.visible, .planchon.visible{ opacity:1; transform:translateY(0); filter:b
 }
 #cierre .eyebrow{ margin-bottom:6px; }
 #cierre img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:bottom center; z-index:0;
+  transform-origin:bottom center;
   filter:brightness(0.35) saturate(1.1);
-  opacity:0; transform:scale(1.08);
+  opacity:0; transform:scale(1.35);
   transition:opacity 1.4s ease, transform 1.4s ease;
 }
-#cierre.visible img{ opacity:1; transform:scale(1); }
+#cierre.visible img{ opacity:1; transform:scale(1.2); }
 #cierre::after{
   content:'';
   position:absolute; inset:0; z-index:1;
