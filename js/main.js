@@ -292,12 +292,11 @@ if(riverMapEl && riverProgress && riverNodes && planchonesEl){
   updateRiver();
 }
 
-/* HUD: ubicación actual (nombre de la sección) + porcentaje del recorrido */
+/* HUD: ubicación actual (nombre de la sección) con fundido suave + barra de avance */
 const hudUbicacionEl = document.getElementById('hudUbicacion');
-const hudProgress = document.getElementById('hudProgress');
 const hudBarFill = document.getElementById('hudBarFill');
 
-if(hudUbicacionEl || hudProgress || hudBarFill){
+if(hudUbicacionEl || hudBarFill){
   const hitosUbicacion = [
     { el: document.getElementById('presentacion'), label: 'Presentación' },
     { el: document.getElementById('introduccion'), label: 'Puente Gustavo Rojas Pinilla' },
@@ -310,6 +309,20 @@ if(hudUbicacionEl || hudProgress || hudBarFill){
     { el: document.getElementById('cierre'), label: 'Cierre' },
   ].filter(hito => hito.el);
 
+  let ultimoLabel = hudUbicacionEl ? hudUbicacionEl.textContent : null;
+  let fadeTimer = null;
+
+  function setNombre(nuevo){
+    if(!hudUbicacionEl || nuevo === ultimoLabel) return;
+    ultimoLabel = nuevo;
+    clearTimeout(fadeTimer);
+    hudUbicacionEl.classList.add('hud-lugar--out');
+    fadeTimer = setTimeout(() => {
+      hudUbicacionEl.textContent = nuevo;
+      hudUbicacionEl.classList.remove('hud-lugar--out');
+    }, 240);
+  }
+
   function updateHud(){
     const y = window.scrollY + window.innerHeight * 0.35;
     let actual = hitosUbicacion[0];
@@ -317,11 +330,10 @@ if(hudUbicacionEl || hudProgress || hudBarFill){
       if(docTop(hito.el) <= y) actual = hito;
       else break;
     }
-    if(hudUbicacionEl && actual) hudUbicacionEl.textContent = actual.label;
+    if(actual) setNombre(actual.label);
 
     const alto = document.documentElement.scrollHeight - window.innerHeight;
     const progreso = alto > 0 ? clamp01(window.scrollY / alto) : 0;
-    if(hudProgress) hudProgress.textContent = Math.round(progreso * 100);
     if(hudBarFill) hudBarFill.style.width = `${(progreso * 100).toFixed(1)}%`;
   }
   onScroll(updateHud);
@@ -329,17 +341,42 @@ if(hudUbicacionEl || hudProgress || hudBarFill){
   updateHud();
 }
 
-/* Reveal al hacer scroll: desvanecimiento + desenfoque para todo el texto */
+/* Reveal al hacer scroll: la clase .visible se agrega Y se quita según la
+   sección esté en pantalla, para que cada texto del proyecto haga fade-in al
+   entrar y fade-out al salir (bajando y subiendo). .planchon-intro y
+   .planchon-3d-escena quedan fuera: tienen su propia coreografía repetible
+   más abajo. */
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
+    entry.target.classList.toggle('visible', entry.isIntersecting);
   });
-}, { threshold: 0 });
+}, { threshold: 0.4 });
 
-document.querySelectorAll('#recorrido section, .planchon').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('#recorrido section:not(.planchon-intro):not(.planchon-3d-escena), .planchon').forEach(el => revealObserver.observe(el));
+
+/* Entrada de cada planchón (número + título + tagline): a diferencia del
+   reveal de arriba, esta se agrega Y se quita según el elemento esté o no
+   en pantalla, para que la animación se repita cada vez que se cambia de
+   planchón, tanto al bajar como al subir. */
+const planchonIntroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    entry.target.classList.toggle('entra', entry.isIntersecting);
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.planchon-intro').forEach(el => planchonIntroObserver.observe(el));
+
+/* Entrada de la escena 3D de cada planchón: al llegar, el marco neón se
+   materializa y el video entra con fade dentro. Igual que la intro, la clase
+   se agrega y se quita según la escena esté al menos un poco en pantalla,
+   para que la animación se repita cada vez que se entra y se sale. */
+const planchon3dObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    entry.target.classList.toggle('entra-3d', entry.isIntersecting);
+  });
+}, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+
+document.querySelectorAll('.planchon-3d-escena').forEach(el => planchon3dObserver.observe(el));
 
 /* Panel "Ver más" de cada planchón (y del origen): drawer que se desliza
    desde el lado contrario al texto. */

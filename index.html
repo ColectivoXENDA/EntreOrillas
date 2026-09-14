@@ -9,7 +9,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.cdnfonts.com/css/varino" rel="stylesheet"/>
-<link href="css/style.css" rel="stylesheet"/>
+<link href="css/style.css?v=3" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="loader" id="loader">
@@ -44,10 +44,9 @@
 </svg>
 </nav>
 <div aria-hidden="true" class="hud-readout" id="hudReadout">
-<div class="hud-row"><span class="hud-key">Ubicación actual</span></div>
-<div class="hud-row"><span class="hud-val" id="hudUbicacion">Presentación</span></div>
-<div class="hud-row"><span class="hud-key">RUTA</span><span class="hud-val"><span id="hudProgress">0</span>%</span></div>
-<div class="hud-bar"><span class="hud-bar__fill" id="hudBarFill"></span></div>
+<span class="hud-eyebrow">Ruta del Sinú</span>
+<span class="hud-lugar" id="hudUbicacion">Presentación</span>
+<span class="hud-rule"><span class="hud-rule__fill" id="hudBarFill"></span></span>
 </div>
 <main id="recorrido">
 <!-- 1. Presentación -->
@@ -205,30 +204,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>La Esmeralda posee una identidad visual particular dentro del recorrido. Su nombre y sus colores hacen que pueda ser reconocida con facilidad y muestran cómo una embarcación puede construir una imagen propia a partir de elementos sencillos que permanecen en la memoria de quienes utilizan el servicio.</p>
-<p>Los planchones no son iguales entre sí. Cada uno desarrolla características que permiten diferenciarlo y reconocerlo dentro del paisaje. En La Esmeralda, esta identidad visual se convierte en una oportunidad para observar cómo los colores, los nombres y las formas también participan en la construcción de la memoria del río.</p>
+<p>La Esmeralda se distingue por su identidad visual: nombre y colores la hacen fácil de reconocer y muestran cómo cada embarcación construye una imagen propia en la memoria del río.</p>
 <h3>Técnica</h3>
-<p>La documentación técnica de La Esmeralda presenta sus características físicas y constructivas a través de planos, fotografías, dimensiones y registros de materiales. Estos elementos permiten conocer la embarcación más allá de su apariencia general.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permitirán explorarla desde diferentes perspectivas y conservar un registro digital de su configuración actual. La técnica se convierte así en otra forma de reconocer y documentar el patrimonio cotidiano del río.</p>
+<p>Planos, fotografías y dimensiones documentan sus características físicas, junto con el modelo 3D que permite explorarla desde todas las perspectivas.</p>
 <h3>Su gente</h3>
-<p>Los planchoneros de La Esmeralda son parte de la identidad del lugar. Sus historias muestran las experiencias que existen detrás del oficio y las relaciones que se construyen a través del contacto diario con pasajeros y habitantes.</p>
-<p>A través de fotografías, entrevistas y frases seleccionadas, esta sección busca poner en primer plano a las personas y reconocer el conocimiento que han construido a partir de su relación constante con el río.</p>
+<p>Sus planchoneros y pasajeros dan vida al lugar; fotografías, frases y entrevistas ponen en primer plano sus historias y su relación con el río.</p>
 <h3>El río</h3>
-<p>El recorrido de La Esmeralda permite experimentar el río desde una perspectiva cercana. El paisaje, el agua, las orillas y los sonidos que acompañan el trayecto forman parte de una experiencia cotidiana que puede ser observada desde diferentes momentos del día.</p>
-<p>Los registros binaurales, las fotografías y las imágenes 360° permitirán recuperar parte de esa experiencia y mostrar el río desde una mirada que combina paisaje, movimiento y sonido.</p>
+<p>Desde La Esmeralda el río se vive de cerca: paisaje, agua, orillas y sonidos forman parte del trayecto cotidiano entre las dos márgenes.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>El entorno de La Esmeralda reúne actividades que forman parte de la vida cotidiana de las orillas. La gastronomía, el comercio, las artesanías, los encuentros y las diferentes formas de permanencia construyen un paisaje humano alrededor del planchón.</p>
-<p>La galería permitirá observar estas dinámicas y reconocer cómo las personas hacen suyo el espacio: trabajan, esperan, conversan, compran, venden, descansan y se encuentran. Estas acciones cotidianas también forman parte de la identidad del territorio.</p>
+<p>A su alrededor crecen el comercio, la gastronomía y los encuentros que muestran cómo se habita la orilla más allá del cruce.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre y la identidad visual de La Esmeralda están relacionados con el color que caracteriza al planchón? Esta relación entre nombre y apariencia permite reconocerlo fácilmente dentro del recorrido.</p>
+<p>¿Sabías que su nombre y sus colores están ligados a la apariencia del planchón, lo que permite reconocerlo fácilmente dentro del recorrido?</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D: gira con el scroll, frame por frame -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LA%20ESMERALDA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>La Esmeralda</h3>
@@ -268,30 +264,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>La 26 cierra el recorrido por los doce planchones de Entre Orillas. Su nombre está relacionado directamente con la calle 26, estableciendo una conexión sencilla y directa entre la embarcación y el territorio que la rodea.</p>
-<p>Llegar hasta La 26 significa completar un recorrido que atraviesa diferentes lugares, personas y formas de relacionarse con el río. Cada planchón tiene características particulares, pero todos hacen parte de una misma red de conexiones que permite comprender el Sinú como un espacio que une las dos orillas y forma parte de la vida cotidiana de Montería.</p>
+<p>La 26 se relaciona directamente con la calle 26: su nombre conecta la embarcación con el barrio que la rodea y la identifica dentro de la red de planchones.</p>
 <h3>Técnica</h3>
-<p>La sección técnica presenta el registro arquitectónico y visual de La 26. Los planos, fotografías, dimensiones, materiales y detalles permiten conocer las características físicas de la embarcación y documentar su estado actual.</p>
-<p>El modelo 3D, los renders y las imágenes 360° completan esta mirada y permiten recorrer digitalmente el planchón. Al finalizar la ruta, este registro se suma a los otros once y contribuye a construir una memoria digital del sistema de planchones.</p>
+<p>Planos, fotografías y dimensiones registran sus características físicas y permiten documentar su estado actual, acompañados del modelo 3D para recorrerla digitalmente.</p>
 <h3>Su gente</h3>
-<p>Las personas que trabajan en La 26 forman parte de la historia que cierra este recorrido. Sus experiencias permiten conocer cómo se vive el oficio y qué significa trabajar diariamente sobre el río.</p>
-<p>A través de fotografías, entrevistas, frases y relatos, esta sección recupera las voces de quienes hacen posible la conexión entre las orillas. Sus historias, junto con las de los demás planchoneros, permiten entender que la memoria de los planchones es también una memoria humana.</p>
+<p>Quienes trabajan en La 26 forman parte de su historia: entrevistas y retratos recuperan sus voces y muestran qué significa trabajar cada día sobre el río.</p>
 <h3>El río</h3>
-<p>La 26 ofrece otro punto para experimentar el río y observar el paisaje que se transforma entre ambas orillas. El agua, los sonidos, el movimiento de la embarcación y las actividades de los habitantes construyen una experiencia que forma parte de la cotidianidad del lugar.</p>
-<p>El paisaje sonoro binaural, las fotografías y las imágenes 360° permitirán cerrar el recorrido desde una experiencia visual y auditiva. El visitante podrá detenerse nuevamente en el río y reconocer algunos de los sonidos y paisajes encontrados a lo largo de la ruta.</p>
+<p>Desde La 26 se observa cómo el paisaje se transforma entre las orillas: agua, sonidos y movimiento convierten cada cruce en una experiencia cotidiana del lugar.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>Como en los demás puntos del recorrido, alrededor de La 26 se desarrolla una vida cotidiana marcada por el comercio, la gastronomía, los encuentros y las diferentes formas de habitar la orilla. Estas actividades permiten comprender que el río es también un espacio social.</p>
-<p>La galería reunirá fotografías de los habitantes, comercios, oficios, encuentros y prácticas cotidianas que se desarrollan en este entorno. Así, el último planchón se convierte también en una oportunidad para mirar nuevamente aquello que estuvo presente durante todo el recorrido.</p>
+<p>El comercio, la gastronomía y los encuentros alrededor del embarcadero muestran que el río también es un espacio social y habitado.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre de La 26 está relacionado directamente con la calle 26? Su nombre establece una conexión entre la embarcación y el territorio, una característica que también aparece en otros puntos de la ruta.</p>
+<p>¿Sabías que el nombre de La 26 hace referencia directa a la calle 26, estableciendo una conexión entre la embarcación y el territorio que la rodea?</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LA%2026%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>La 26</h3>
@@ -331,30 +324,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>El Minuto de Dios hace parte de la red de conexiones que permiten atravesar diariamente el río Sinú. Su nombre está relacionado con el sector en el que se encuentra y muestra cómo los planchones mantienen una relación directa con los barrios y comunidades que se desarrollan alrededor del río.</p>
-<p>Este lugar también permite reconocer el planchón como espacio de trabajo y sustento. Detrás de cada recorrido existen personas para quienes esta actividad forma parte de su vida diaria y de la economía de sus hogares. Así, el planchón se convierte en un punto donde movilidad, trabajo y territorio se encuentran.</p>
+<p>El Minuto de Dios conecta la vida del río con el barrio que le da nombre: un espacio de trabajo y sustento para muchas familias de la orilla.</p>
 <h3>Técnica</h3>
-<p>El registro técnico de El Minuto de Dios permite conocer las características físicas de la embarcación y los elementos que conforman su estructura. Los planos, fotografías y demás recursos gráficos documentan su estado actual y permiten observar detalles que normalmente pasan desapercibidos.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permitirán explorar el planchón digitalmente y conservar una representación de este elemento dentro del paisaje del río. La documentación busca unir la mirada arquitectónica con la experiencia cotidiana del lugar.</p>
+<p>El registro técnico documenta su estructura, materiales y dimensiones a través de planos y fotografías, complementados con el modelo 3D para explorarlo desde todas las perspectivas.</p>
 <h3>Su gente</h3>
-<p>En El Minuto de Dios, las personas que trabajan en el planchón ocupan un lugar central. Sus historias permiten conocer el oficio desde una perspectiva humana y comprender cómo la relación con el río puede convertirse en parte de una trayectoria de vida.</p>
-<p>Las fotografías, entrevistas, frases y relatos permitirán mostrar sus experiencias, recuerdos y aprendizajes. De esta manera, el visitante podrá conocer no solamente el planchón, sino también a quienes hacen posible que continúe funcionando.</p>
+<p>Quienes trabajan en El Minuto de Dios son el centro de este planchón: sus historias muestran el oficio desde una mirada humana y su relación de vida con el río.</p>
 <h3>El río</h3>
-<p>El río acompaña cada jornada de El Minuto de Dios y forma parte del entorno en el que se desarrolla el oficio. El paisaje de las orillas, el movimiento del agua y los sonidos de la embarcación construyen una experiencia particular para quienes realizan el cruce.</p>
-<p>Los registros binaurales permitirán escuchar el ambiente desde este punto, mientras las fotografías y las imágenes 360° permitirán observar el paisaje y acercarse a la experiencia de estar sobre el Sinú.</p>
+<p>El río acompaña cada jornada: paisaje, movimiento del agua y sonidos construyen la experiencia particular de quienes realizan el cruce.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>El entorno de El Minuto de Dios reúne diferentes actividades relacionadas con la vida cotidiana de sus habitantes. El comercio, la gastronomía, los encuentros y las formas de permanencia alrededor del embarcadero muestran cómo estos espacios son utilizados más allá del momento del cruce.</p>
-<p>La galería permitirá documentar estas dinámicas y mostrar las diferentes maneras en que las personas habitan la orilla: trabajando, esperando, conversando, comprando, vendiendo o simplemente permaneciendo junto al río.</p>
+<p>Comercio, gastronomía y encuentros alrededor del embarcadero muestran cómo se habita la orilla más allá del momento de cruzar.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre de El Minuto de Dios está relacionado con el sector en el que se encuentra? Esta relación entre planchón y territorio muestra cómo los nombres también pueden convertirse en una forma de reconocer los lugares desde los que se construye la vida cotidiana.</p>
+<p>¿Sabías que su nombre está relacionado con el sector donde se encuentra? Así, planchón y territorio se reconocen mutuamente.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/MINUTO%20DE%20DIOS%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>El Minuto de Dios</h3>
@@ -394,30 +384,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>La Estrella del Sinú llama la atención por sus características visuales y ornamentales. Sus detalles hacen que tenga una presencia particular dentro del paisaje y permiten observar cómo una estructura de uso cotidiano puede adquirir una identidad propia a través de su forma y de los elementos que la componen.</p>
-<p>Este planchón invita a ampliar la idea de patrimonio. No solamente los grandes edificios o monumentos pueden conservar valores culturales; también existen estructuras cotidianas que, con el tiempo, desarrollan características propias y se convierten en referentes para quienes las utilizan y reconocen.</p>
+<p>Su ornamento y forma la convierten en una pieza singular dentro del paisaje, mostrando que una estructura cotidiana puede desarrollar identidad propia.</p>
 <h3>Técnica</h3>
-<p>La Estrella del Sinú tendrá en esta sección un registro detallado de sus características arquitectónicas y constructivas. Los planos, elevaciones, cortes, fotografías y detalles permitirán observar los elementos que conforman la embarcación.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permitirán acercarse a sus formas y detalles desde diferentes perspectivas. Este material busca documentar una expresión constructiva que forma parte del paisaje cotidiano del río.</p>
+<p>Planos, cortes, fotografías y modelo 3D documentan su configuración arquitectónica y permiten explorarla en detalle.</p>
 <h3>Su gente</h3>
-<p>Los planchoneros de La Estrella del Sinú son parte esencial de la experiencia del lugar. Sus historias permiten conocer el oficio desde quienes lo realizan diariamente y comprender las relaciones que se construyen entre trabajo, río y comunidad.</p>
-<p>Las fotografías, testimonios y frases de las entrevistas permitirán conservar sus voces y mostrar que la historia del planchón también está en las personas que lo trabajan y mantienen en funcionamiento.</p>
+<p>Sus planchoneros comparten historias y oficio; entrevistas y retratos recuperan sus voces.</p>
 <h3>El río</h3>
-<p>La Estrella del Sinú se encuentra inmersa en el paisaje del río. Desde la embarcación, el visitante puede observar las dos orillas, el movimiento del agua y las diferentes actividades que ocurren alrededor.</p>
-<p>Los sonidos binaurales permitirán acercarse a la atmósfera del lugar, mientras las fotografías y las imágenes 360° conservarán una visión amplia de la experiencia de estar sobre el río.</p>
+<p>Desde la embarcación se observan ambas orillas y el paisaje en movimiento sobre el agua.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>Alrededor de La Estrella del Sinú se desarrollan actividades que muestran diferentes formas de habitar la orilla. El comercio, la gastronomía, los encuentros y los oficios forman parte de una dinámica cotidiana que acompaña el funcionamiento del planchón.</p>
-<p>La galería permitirá documentar estas actividades y mostrar cómo los espacios cercanos al río pueden convertirse en lugares de trabajo, permanencia, encuentro y tránsito.</p>
+<p>Gastronomía, comercio y encuentros en la orilla muestran la vida cotidiana alrededor del planchón.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que La Estrella del Sinú destaca por sus elementos ornamentales y por la manera particular en que estos hacen parte de su apariencia? Sus detalles permiten reconocer que la creatividad también puede formar parte de una estructura de uso cotidiano.</p>
+<p>Su nombre está ligado a elementos ornamentales que la hacen reconocible; la creatividad también habita en lo cotidiano.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LA%20ESTRELLA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>La Estrella del Sinú</h3>
@@ -457,30 +444,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>La Bala del Sinú es reconocida por quienes conocen el recorrido por la sensación de rapidez que acompaña su desplazamiento. Su nombre transmite una idea de velocidad y movimiento que hace parte de la manera en que muchas personas experimentan este cruce cotidiano.</p>
-<p>Desde aquí, el río puede observarse como un territorio en movimiento. Las orillas cambian de posición mientras la embarcación avanza, el paisaje se transforma y el tiempo del recorrido adquiere otra percepción. La experiencia permite comprender que cruzar el Sinú también significa experimentar el territorio desde el agua.</p>
+<p>La velocidad de su cruce le da nombre; el río se vive desde el movimiento continuo entre las dos márgenes.</p>
 <h3>Técnica</h3>
-<p>El registro técnico de La Bala del Sinú permitirá conocer su forma, dimensiones, materiales y elementos constructivos. Los planos y fotografías hacen visible la configuración de una embarcación que normalmente se experimenta en movimiento.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permitirán explorarla desde diferentes perspectivas y conservar una representación digital de su estado actual. La documentación reúne así la dimensión arquitectónica y visual del planchón.</p>
+<p>Forma, dimensiones y materiales quedan registrados en planos y fotografías, ampliados con el modelo 3D.</p>
 <h3>Su gente</h3>
-<p>Los planchoneros son quienes convierten el movimiento de La Bala del Sinú en una actividad cotidiana. Sus historias permiten conocer cómo se vive el oficio y qué relación se establece con los pasajeros y con el río.</p>
-<p>Las entrevistas, fotografías y frases seleccionadas permitirán acercarse a las experiencias de quienes conocen este recorrido desde dentro y que hacen parte de la memoria viva de la embarcación.</p>
+<p>Sus planchoneros convierten el movimiento en cotidianidad; sus testimonios mantienen viva la memoria del recorrido.</p>
 <h3>El río</h3>
-<p>En La Bala del Sinú, el río se experimenta especialmente desde el movimiento. El agua, el viento, el sonido del motor y las voces de quienes viajan construyen una experiencia que cambia mientras la embarcación avanza.</p>
-<p>El registro binaural permitirá escuchar este recorrido desde una perspectiva inmersiva. Las fotografías y las imágenes 360° completarán la experiencia para mostrar cómo se percibe el paisaje desde el agua.</p>
+<p>Viento, motor y agua acompañan cada cruce: la experiencia del río se percibe a través del movimiento.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>La actividad del planchón se encuentra acompañada por las dinámicas de las personas que utilizan y habitan sus alrededores. Esperar el cruce, encontrarse con otras personas, trabajar, comprar o desplazarse forman parte de una cotidianidad construida alrededor del río.</p>
-<p>La galería permitirá registrar estas actividades junto con el comercio, la gastronomía y las diferentes formas de ocupar las orillas, mostrando que el movimiento del planchón hace parte de una dinámica social mucho más amplia.</p>
+<p>Esperar el cruce, vender, comprar y encontrarse son acciones que componen la vida de la orilla.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que La Bala del Sinú es reconocida por quienes conocen el recorrido por la rapidez de su cruce? Su nombre se relaciona con esa percepción de movimiento y velocidad que caracteriza la experiencia de atravesar el río.</p>
+<p>Su nombre refleja la rapidez que perciben quienes cruzan cada día; velocidad y memoria van juntas.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LA%20BALA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>La Bala del Sinú</h3>
@@ -520,30 +504,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>Dinastía Tordecilla permite acercarse a la idea de continuidad alrededor del río. Su nombre remite a una historia familiar y abre la posibilidad de comprender cómo un oficio puede permanecer en el tiempo a través de las personas que lo aprenden, lo practican y lo transmiten.</p>
-<p>En los planchones, el conocimiento no se encuentra únicamente en la estructura de la embarcación. También está en quienes conocen el río, entienden sus dinámicas y han aprendido a desarrollar el oficio. Dinastía Tordecilla permite reconocer esa memoria que se transmite entre generaciones y que mantiene vigente una práctica cotidiana.</p>
+<p>Su nombre remite a continuidad familiar: un oficio que se transmite de generación en generación en las orillas del Sinú.</p>
 <h3>Técnica</h3>
-<p>La sección técnica reúne el registro arquitectónico de Dinastía Tordecilla. Los planos, fotografías y demás recursos permiten conocer sus características físicas, materiales y elementos principales.</p>
-<p>El modelo 3D, los renders y las imágenes 360° complementan este contenido y permiten recorrer la embarcación desde diferentes perspectivas. El registro busca conservar tanto sus características constructivas como su imagen dentro del paisaje actual del río.</p>
+<p>Planos, fotografías y el modelo 3D conservan su registro constructivo y su imagen dentro del paisaje del río.</p>
 <h3>Su gente</h3>
-<p>Las personas son fundamentales para comprender la historia de Dinastía Tordecilla. Sus planchoneros permiten acercarse a las experiencias y conocimientos que acompañan el oficio y conocer las historias que se han construido alrededor de este lugar.</p>
-<p>A través de las entrevistas se podrán escuchar sus voces, conocer sus recorridos de vida y reconocer los aprendizajes que hacen posible que una práctica como esta continúe formando parte de la cotidianidad del río.</p>
+<p>La memoria del oficio está en quienes lo practican y lo transmiten; sus voces muestran la historia detrás del planchón.</p>
 <h3>El río</h3>
-<p>El río es el espacio donde se desarrolla y permanece este oficio. Sus condiciones, sonidos y transformaciones hacen parte de una experiencia que los planchoneros conocen de manera directa y cotidiana.</p>
-<p>Los paisajes sonoros binaurales, las fotografías y las imágenes 360° permitirán acercarse al ambiente del lugar y comprender que el río no es únicamente el espacio que se atraviesa, sino también el entorno en el que se construyen conocimientos, recuerdos y formas de vida.</p>
+<p>El río es el escenario de este oficio permanente; sus paisajes y sonidos acompañan cada jornada.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>Las dinámicas alrededor de Dinastía Tordecilla muestran diferentes maneras de relacionarse con la orilla. El comercio, la gastronomía, los encuentros y las actividades diarias hacen parte de un paisaje humano que cambia durante el día, pero que conserva prácticas reconocibles.</p>
-<p>La galería reunirá imágenes de estas actividades y de las personas que habitan el entorno. A través de ellas se podrá observar cómo el espacio del río es utilizado para trabajar, encontrarse, permanecer y desarrollar actividades cotidianas.</p>
+<p>Comercio, gastronomía y encuentros se alternan con el trabajo del planchón, componiendo un paisaje humano vivo.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que la palabra "dinastía" permite acercarse a la idea de continuidad familiar y transmisión de conocimientos? En este planchón, el nombre abre una mirada hacia la relación entre familia, oficio y memoria.</p>
+<p>"Dinastía" alude a la transmisión familiar; el nombre abre una mirada hacia el vínculo entre familia, oficio y memoria.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/DINASTIA%20TORDECILLA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>Dinastía Tordecilla</h3>
@@ -583,30 +564,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>El Canario invita a descubrir el río desde una experiencia especialmente sensorial. Su nombre está relacionado con los sonidos de aves que pueden escucharse en su entorno, haciendo que el paisaje sonoro tenga un papel importante dentro de la identidad del lugar.</p>
-<p>Aquí la experiencia propone detenerse y escuchar. El movimiento del agua, las aves, la vegetación, las voces, los motores y los diferentes sonidos del entorno construyen una atmósfera que forma parte de la vida cotidiana del planchón y que puede pasar desapercibida cuando solamente se piensa en el río como un lugar de paso.</p>
+<p>Su nombre proviene de los sonidos de aves que se escuchan en su entorno; aquí el paisaje sonoro es la identidad.</p>
 <h3>Técnica</h3>
-<p>El levantamiento de El Canario permite conocer su configuración actual y observar los elementos físicos que componen la embarcación. Planos, fotografías, dimensiones y registros de materiales permiten acercarse a sus características desde una mirada arquitectónica.</p>
-<p>El modelo 3D, los renders y las imágenes 360° amplían esta experiencia y permiten explorar el planchón digitalmente. De esta manera, la documentación técnica se convierte también en una herramienta para conservar la memoria visual del lugar.</p>
+<p>Planos, fotografías y el modelo 3D documentan su configuración y permiten explorarla en detalle.</p>
 <h3>Su gente</h3>
-<p>Los planchoneros de El Canario forman parte de la historia cotidiana de este espacio. Sus relatos permiten conocer cómo se desarrolla el oficio, qué experiencias han acumulado y qué relación han construido con el río a través del tiempo.</p>
-<p>Las fotografías, frases y testimonios buscan poner rostro a quienes hacen posible el funcionamiento del planchón y conservar sus voces como parte del patrimonio vivo que se encuentra alrededor del Sinú.</p>
+<p>Los planchoneros comparten sus experiencias y su relación cotidiana con el río; retratos y testimonios dan voz a su historia.</p>
 <h3>El río</h3>
-<p>El Canario encuentra parte de su identidad en aquello que ocurre alrededor del agua y, especialmente, en los sonidos del entorno. Escuchar el río desde este punto permite descubrir una dimensión que no siempre es visible: el paisaje sonoro que acompaña el cruce y las actividades de la orilla.</p>
-<p>Esta sección será acompañada por el registro binaural realizado en el lugar, además de fotografías e imágenes 360°. El visitante podrá cerrar los ojos, escuchar y aproximarse a la experiencia sonora de este punto del río.</p>
+<p>Escuchar el agua, las aves y los sonidos de la orilla permite descubrir una dimensión del río que a veces pasa desapercibida.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>La vida alrededor de El Canario está compuesta por pequeñas actividades que se desarrollan diariamente. El comercio, la gastronomía, los encuentros y las diferentes maneras de permanecer junto al río construyen una dinámica propia alrededor del embarcadero.</p>
-<p>La galería mostrará estas prácticas y permitirá observar cómo los habitantes utilizan el espacio para trabajar, conversar, esperar, vender, comprar o encontrarse. Así, el entorno del planchón se presenta como un espacio activo y habitado.</p>
+<p>Comercio, gastronomía y encuentros diarios muestran la vida que crece alrededor del embarcadero.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre de El Canario está relacionado con los sonidos de aves que pueden escucharse en su entorno? En este planchón, aquello que se escucha se convierte también en una forma de reconocer y recordar el lugar.</p>
+<p>¿Sabías que su nombre proviene de los pájaros del entorno? Escuchar el lugar se convierte en una forma de reconocerlo.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/EL%20CANARIO%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>El Canario</h3>
@@ -646,30 +624,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>Los 2 Hermanos lleva en su nombre una referencia directa a los vínculos familiares. Esta característica permite acercarse a la relación que existe entre familia, trabajo y territorio y a la manera en que los lazos personales pueden formar parte de la historia de un espacio cotidiano.</p>
-<p>El río conecta personas y lugares, pero también puede formar parte de las historias de quienes trabajan y viven en sus alrededores. En Los 2 Hermanos, la ruta invita a reconocer esa dimensión afectiva y familiar que puede permanecer detrás de un nombre y convertirse con el tiempo en parte de la memoria del lugar.</p>
+<p>Su nombre revela un vínculo familiar detrás del oficio; la memoria humana forma parte de la historia de este espacio del río.</p>
 <h3>Técnica</h3>
-<p>La documentación técnica de Los 2 Hermanos permite conocer las características físicas de la embarcación y los elementos que conforman su estructura. Los planos y fotografías muestran aquello que normalmente se observa de manera rápida durante el cruce.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permiten ampliar esta mirada y explorar digitalmente el planchón. El objetivo es conservar un registro detallado de una estructura que forma parte de la movilidad cotidiana de Montería.</p>
+<p>Planos, fotografías y el modelo 3D registran su estructura y conservan un registro digital de la embarcación.</p>
 <h3>Su gente</h3>
-<p>En Los 2 Hermanos, las historias de quienes trabajan en el planchón permiten acercarse a la dimensión humana del recorrido. Cada planchonero tiene una experiencia particular y una relación diferente con el oficio, el río y las personas que utilizan la embarcación.</p>
-<p>Sus fotografías, relatos y frases permiten construir un retrato colectivo de quienes mantienen vivo este servicio. Más que presentar únicamente nombres, esta sección busca mostrar las personas que están detrás de la experiencia cotidiana del cruce.</p>
+<p>Sus planchoneros cuentan historias de vida y vínculos con el oficio; testimonios y retratos hacen visible su memoria.</p>
 <h3>El río</h3>
-<p>El río acompaña cada jornada de Los 2 Hermanos y forma parte del paisaje desde el que se desarrolla el oficio. El movimiento del agua, el sonido de la embarcación y las voces de los pasajeros crean un ambiente particular que cambia a lo largo del día.</p>
-<p>A través del sonido binaural, las fotografías y las imágenes 360°, el visitante podrá acercarse a esta experiencia y descubrir el río desde una perspectiva inmersiva.</p>
+<p>Paisaje, movimiento y sonidos acompañan cada jornada; el río es el escenario permanente del trabajo y del cruce.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>Alrededor de Los 2 Hermanos se encuentran diferentes actividades que forman parte de la vida diaria de las orillas. El comercio, la gastronomía, los encuentros y las actividades de los habitantes muestran que estos espacios son utilizados de muchas maneras, no solamente para cruzar el río.</p>
-<p>La galería permitirá reconocer esas formas de habitar la orilla: personas que esperan, trabajan, conversan, venden, compran o permanecen en el espacio. Son pequeñas acciones cotidianas que, repetidas en el tiempo, construyen la identidad del lugar.</p>
+<p>Esperar, conversar, comprar y vender son acciones cotidianas que construyen la identidad de la orilla.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre Los 2 Hermanos hace referencia a un vínculo familiar? Un nombre aparentemente sencillo puede convertirse en una puerta de entrada para descubrir las relaciones humanas que también hacen parte de la historia de los planchones.</p>
+<p>¿Sabías que "Los 2 Hermanos" refleja un lazo familiar? Un nombre sencillo abre la puerta a historias humanas.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LOS%202%20HERMANOS%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>Los 2 Hermanos</h3>
@@ -709,30 +684,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>El Colombiano se reconoce dentro del recorrido por los elementos visuales que acompañan su identidad. Sus colores y referencias asociadas a Colombia hacen que la embarcación tenga una presencia particular dentro del paisaje cotidiano del río.</p>
-<p>Los nombres, colores, símbolos y formas de cada planchón contribuyen a diferenciarlos entre sí. En El Colombiano, estos elementos permiten observar cómo una práctica local y cotidiana puede incorporar referencias que forman parte de una identidad más amplia y convertirlas en parte de la experiencia de cruzar el río.</p>
+<p>Sus colores e identidad visual la hacen reconocible; referencias a Colombia muestran cómo lo local se conecta con lo nacional.</p>
 <h3>Técnica</h3>
-<p>El registro técnico de El Colombiano permite observar la embarcación más allá de su apariencia general. Los planos, fotografías, dimensiones y registros de materiales permiten conocer los elementos que la conforman y comprender cómo se organiza el espacio utilizado diariamente por trabajadores y pasajeros.</p>
-<p>El modelo 3D, los renders y las imágenes 360° permitirán explorar sus características desde diferentes perspectivas y conservar una representación digital de su estado actual.</p>
+<p>Planos, dimensiones y fotografías documentan su estructura, junto con el modelo 3D para explorarla en detalle.</p>
 <h3>Su gente</h3>
-<p>Las personas que trabajan en El Colombiano son parte fundamental de su identidad. Esta sección presenta sus rostros y sus historias, mostrando las experiencias que se han construido alrededor del oficio y de la relación cotidiana con el río.</p>
-<p>Los testimonios y frases de las entrevistas permitirán conocer cómo los planchoneros viven el trabajo, qué recuerdos conservan y qué significado tiene para ellos permanecer vinculados a este lugar.</p>
+<p>Quienes trabajan en El Colombiano son parte fundamental de su identidad; sus testimonios muestran el oficio cotidiano.</p>
 <h3>El río</h3>
-<p>El Colombiano permite experimentar el río desde el movimiento entre las dos orillas. Durante el recorrido, el paisaje cambia constantemente y los sonidos del agua, la embarcación y las personas construyen una experiencia particular.</p>
-<p>Los registros binaurales, fotografías e imágenes 360° permitirán recuperar parte de esa experiencia y acercar al visitante a la manera en que se percibe el río desde este punto.</p>
+<p>Desde el movimiento entre orillas se transforma el paisaje; agua, sonidos y personas construyen la experiencia.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>El entorno de El Colombiano es también un espacio de actividad cotidiana. Las personas que trabajan, esperan, venden, compran o se encuentran alrededor del embarcadero construyen una dinámica que acompaña el funcionamiento del planchón.</p>
-<p>La galería reunirá fotografías de gastronomía, comercio, artesanías, encuentros y formas de habitar la orilla, mostrando cómo las actividades humanas se relacionan directamente con el espacio del río.</p>
+<p>Gastronomía, comercio y encuentros alrededor del embarcadero muestran cómo se habita la orilla del río.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que los colores y elementos visuales de El Colombiano hacen parte de aquello que permite reconocerlo dentro del paisaje del río? Su identidad visual se convierte así en otra forma de diferenciarlo dentro del recorrido.</p>
+<p>¿Sabías que sus colores y elementos visuales permiten distinguirlo fácilmente dentro del recorrido por el río?</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/EL%20COLOMBIANO%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>El Colombiano</h3>
@@ -772,30 +744,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>Pompeya permite acercarse a una de las dimensiones más importantes de los planchones: el trabajo. Cada día, esta embarcación hace parte de una dinámica de movilidad que conecta personas, actividades y territorios a través del río Sinú.</p>
-<p>Detrás de cada recorrido existe un oficio que requiere experiencia, atención y conocimiento del entorno. El planchonero no solamente conduce una embarcación; también desarrolla una relación permanente con el río, con los pasajeros y con las condiciones que hacen parte de cada jornada. Pompeya permite mirar esa dimensión humana que muchas veces permanece detrás de la experiencia del viaje.</p>
+<p>Su nombre lleva la idea de un oficio sobre el río; cada jornada, el planchonero conecta personas y territorios.</p>
 <h3>Técnica</h3>
-<p>El levantamiento de Pompeya permite registrar cómo es actualmente la embarcación y cuáles son los elementos que hacen posible su funcionamiento. Los planos, fotografías y demás recursos gráficos permiten reconocer su forma, dimensiones, materiales y características particulares.</p>
-<p>El modelo 3D, los renders y las imágenes 360° complementan la documentación y permiten recorrer digitalmente el planchón. Este registro busca conservar su configuración actual y hacer visible una arquitectura cotidiana que normalmente se observa solamente durante el cruce.</p>
+<p>Planos, fotografías y el modelo 3D registran su configuración actual y permiten recorrerla digitalmente.</p>
 <h3>Su gente</h3>
-<p>La historia de Pompeya también está en las personas que trabajan en él. En esta sección se presentan los planchoneros, sus experiencias y los relatos que permiten conocer el oficio desde la perspectiva de quienes lo realizan diariamente.</p>
-<p>Sus historias de vida muestran las relaciones que se construyen alrededor del trabajo y del río. A través de sus palabras, fotografías y testimonios, el visitante podrá conocer las experiencias que permanecen detrás de cada recorrido.</p>
+<p>Sus planchoneros cuentan historias de vida y vínculos con el oficio; sus palabras muestran la memoria humana del río.</p>
 <h3>El río</h3>
-<p>El río es el escenario permanente del oficio del planchonero. Sus cambios, sonidos, movimientos y paisajes forman parte de una experiencia que se repite diariamente, pero que nunca es exactamente igual.</p>
-<p>Los registros sonoros binaurales permitirán escuchar el entorno de Pompeya desde una perspectiva inmersiva. Junto con las fotografías y las imágenes 360°, estos recursos buscan mostrar cómo se percibe el río desde el lugar donde ocurre el cruce.</p>
+<p>Sus cambios, sonidos y paisajes forman parte de una experiencia que se repite pero nunca se repite igual.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>La actividad de Pompeya se encuentra acompañada por diferentes prácticas cotidianas que ocurren alrededor del embarcadero y sus orillas. El comercio, la gastronomía, los encuentros y las actividades de los habitantes hacen parte del movimiento que acompaña cada jornada.</p>
-<p>La galería reunirá imágenes de estas dinámicas para mostrar cómo las personas ocupan y utilizan el espacio. Esperar, conversar, trabajar, comprar, vender o simplemente permanecer junto al río son formas de habitar que también construyen identidad.</p>
+<p>Comercio, gastronomía y encuentros alrededor del embarcadero acompañan la dinámica de cada jornada.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que detrás del funcionamiento cotidiano de un planchón existe un oficio que depende del conocimiento y la experiencia de quienes trabajan directamente sobre el río? Cada recorrido hace parte de una práctica que conecta movilidad, trabajo y territorio.</p>
+<p>Detrás de cada cruce existe un oficio que depende del conocimiento y la experiencia de quienes trabajan directamente sobre el río.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/POMPEYA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>Pompeya</h3>
@@ -835,30 +804,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>El Rey David es uno de los planchones que atraviesan diariamente el río Sinú y cuyo nombre guarda un vínculo religioso. Esta referencia permite acercarse a una dimensión particular de la identidad del territorio: aquella que se construye a partir de las creencias, los símbolos y los significados que las personas incorporan a los espacios que forman parte de su vida cotidiana.</p>
-<p>Su nombre demuestra que los planchones no son únicamente estructuras destinadas al transporte. También son lugares cargados de significados construidos por quienes los utilizan y trabajan en ellos. En El Rey David, la ruta invita a detenerse en esas pequeñas referencias que, aunque pueden pasar desapercibidas, ayudan a entender la diversidad de historias que existen alrededor del río.</p>
+<p>Su nombre guarda una referencia religiosa, mostrando que las creencias también habitan la vida cotidiana del río.</p>
 <h3>Técnica</h3>
-<p>La sección técnica presenta el registro arquitectónico y visual de El Rey David. A través de planos, dimensiones, materiales y fotografías se podrá conocer con mayor detalle la estructura que hace posible su funcionamiento y reconocer sus características particulares.</p>
-<p>El modelo 3D, los renders y las imágenes 360° complementan este registro y permiten explorar la embarcación desde diferentes puntos de vista. De esta manera, el planchón queda documentado no solamente como medio de transporte, sino también como una pieza que hace parte del paisaje cotidiano del río.</p>
+<p>Planos, dimensiones y fotografías documentan su estructura; el modelo 3D complementa este registro desde distintas perspectivas.</p>
 <h3>Su gente</h3>
-<p>Cada planchón tiene detrás personas con historias diferentes. En El Rey David, esta sección permitirá conocer a sus planchoneros, acercándonos a sus experiencias, sus recorridos de vida y la relación que han construido con este oficio y con el río.</p>
-<p>Sus testimonios permiten comprender el valor humano que existe detrás de cada cruce. Las fotografías, frases y relatos recuperados durante las entrevistas hacen visible una memoria que difícilmente podría encontrarse en un mapa o en un registro técnico.</p>
+<p>Sus planchoneros aportan voces, memorias y experiencias que hacen visible el valor humano detrás de cada cruce.</p>
 <h3>El río</h3>
-<p>Desde El Rey David, el río se experimenta como un espacio de conexión y movimiento. Cada recorrido permite observar las dos orillas desde el agua, reconocer los cambios del paisaje y escuchar los sonidos que acompañan el desplazamiento de la embarcación.</p>
-<p>A través de los registros binaurales, fotografías e imágenes 360°, esta sección busca conservar la experiencia sonora y visual del lugar. El visitante podrá acercarse a una parte del ambiente que rodea al planchón y descubrir el río desde una perspectiva más sensorial.</p>
+<p>Cada recorrido permite observar el paisaje, escuchar los sonidos y descubrir el río desde una mirada sensorial.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>El entorno de El Rey David reúne diferentes actividades y formas de apropiación del espacio. El comercio, la gastronomía, los encuentros entre habitantes y las actividades que se desarrollan mientras las personas esperan o realizan el cruce hacen parte de una cotidianidad construida alrededor del río.</p>
-<p>Las fotografías permitirán observar estas dinámicas y reconocer cómo las personas utilizan las orillas para trabajar, encontrarse, permanecer y desplazarse. La vida cotidiana se convierte así en una parte fundamental de la identidad de este lugar.</p>
+<p>Gastronomía, comercio y encuentros en la orilla muestran formas de habitar el espacio cotidiano del planchón.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre El Rey David está relacionado con una referencia religiosa? Esta relación permite descubrir cómo las creencias y los significados personales también pueden formar parte de la identidad de los espacios que hacen parte de la vida cotidiana.</p>
+<p>Su nombre proviene de una referencia religiosa; las creencias forman parte de la identidad de este punto del río.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/El%20Rey%20David%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>El Rey David</h3>
@@ -898,30 +864,27 @@
 </button>
 <div class="planchon-panel-contenido">
 <h3>Conoce el planchón</h3>
-<p>La Bonga N.º 1 es uno de los puntos que hacen parte de la conexión cotidiana entre las dos orillas del río Sinú. Su nombre está relacionado con el embarcadero ubicado en la margen izquierda, donde se encuentra una bonga que hace parte del paisaje y que permite reconocer este lugar. Este vínculo entre el nombre y un elemento presente en el territorio muestra cómo la identidad de los planchones también se construye a partir de aquello que las personas observan y reconocen en su entorno.</p>
-<p>Aquí comienza el recorrido de Entre Orillas: un acercamiento al río desde una experiencia cotidiana. El embarcadero, la bonga, el agua, los pasajeros y el movimiento del planchón forman parte de una escena que se repite diariamente y que, para quienes viven en Montería, puede parecer habitual. Sin embargo, al detenerse a observarla, esta escena permite descubrir una parte importante de la relación que existe entre la ciudad y el río.</p>
+<p>Su nombre viene de la bonga en el embarcadero de la margen izquierda; un elemento del entorno que se convirtió en referencia.</p>
 <h3>Técnica</h3>
-<p>La Bonga N.º 1 también puede ser entendida desde su dimensión física y constructiva. En esta sección se presenta el levantamiento realizado sobre el planchón para conocer su forma, dimensiones, materiales y elementos que permiten su funcionamiento. Los planos y registros permiten observarlo con mayor detalle y reconocer características que normalmente pasan desapercibidas durante un cruce cotidiano.</p>
-<p>A través del modelo 3D, los renders, las fotografías y las imágenes 360°, el visitante podrá explorar el planchón desde diferentes perspectivas y acercarse a sus elementos principales. Este registro busca conservar una imagen del estado actual de la embarcación y convertirla en parte de la memoria digital del río.</p>
+<p>Planos, fotografías, renders y el modelo 3D documentan su configuración actual y conservan una memoria digital.</p>
 <h3>Su gente</h3>
-<p>Detrás de cada recorrido existen personas que hacen posible que el planchón continúe funcionando. En esta sección conoceremos a quienes trabajan en La Bonga N.º 1, sus experiencias y las historias que han construido alrededor del río. Sus voces permiten comprender el oficio desde una perspectiva cercana y cotidiana.</p>
-<p>Las fotografías, relatos y frases de las entrevistas muestran que trabajar en un planchón no consiste únicamente en trasladar pasajeros de una orilla a otra. También implica establecer relaciones con quienes utilizan el servicio, conocer el comportamiento del río y hacer de este espacio una parte importante de la vida diaria.</p>
+<p>Sus planchoneros comparten oficio, memorias y relaciones cotidianas con el río; sus voces muestran la vida detrás del cruce.</p>
 <h3>El río</h3>
-<p>En La Bonga N.º 1, el río puede observarse desde una de sus experiencias más cotidianas: el cruce. El agua, el movimiento de la embarcación, el paisaje de las orillas y los sonidos que acompañan cada recorrido forman parte de una experiencia que cambia constantemente, aunque el trayecto sea conocido por quienes lo realizan todos los días.</p>
-<p>Esta sección permite escuchar y observar ese entorno a través de fotografías, imágenes 360° y paisajes sonoros binaurales. El objetivo es acercarse al río no solamente desde lo que vemos, sino también desde lo que escuchamos y sentimos durante el recorrido.</p>
+<p>Desde La Bonga N.º 1, el cruce se convierte en una experiencia de paisaje, movimiento y sonido que cambia cada día.</p>
 <h3>Costumbres y vida cotidiana</h3>
-<p>Alrededor de La Bonga N.º 1 se desarrolla una vida cotidiana que va más allá del transporte. El embarcadero y sus alrededores son espacios de paso, encuentro, trabajo y permanencia, donde diferentes personas desarrollan actividades relacionadas con el comercio, la gastronomía y los servicios que hacen parte de la dinámica de la zona.</p>
-<p>La galería permitirá reconocer estas prácticas a través de imágenes de los habitantes, los comercios, los espacios de encuentro y las diferentes formas de habitar la orilla. Así, el visitante podrá descubrir cómo un lugar destinado al cruce también se convierte en escenario de relaciones sociales y actividades que forman parte de la vida diaria.</p>
+<p>Embarcadero y alrededores son espacios de paso, encuentro y trabajo que forman parte de la vida diaria.</p>
 <h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre de La Bonga N.º 1 está relacionado con una bonga ubicada en el embarcadero de la margen izquierda del río? Este elemento del entorno se convirtió en una referencia para identificar el planchón y hace parte de la manera en que las personas reconocen este punto del recorrido.</p>
+<p>Una bonga ubicada en el embarcadero dio nombre al planchón; así, el entorno se convierte en identidad.</p>
 </div>
 </aside>
 <!-- 3. Modelo 3D -->
 <section class="planchon-3d-escena">
 <div class="planchon-3d-sticky">
+<div class="planchon-3d-box">
 <video class="planchon-3d-video" muted="" playsinline="" preload="auto">
 <source src="assets/videos/LA%20BONGA%203D.mp4" type="video/mp4"/>
 </video>
+</div>
 <div class="planchon-3d-caption">
 <span class="eyebrow">Modelo 3D</span>
 <h3>La Bonga N.º 1</h3>

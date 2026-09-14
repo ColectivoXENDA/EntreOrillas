@@ -175,23 +175,33 @@ body.revelado #presentacion .scroll-indicator{ animation:entra-indicador 0.8s ea
 }
 @media (max-width:820px){ .river-map{ display:none; } }
 
-/* HUD de coordenadas (esquina inferior derecha) */
+/* Etiqueta editorial de ruta (esquina inferior derecha) */
 .hud-readout{
-  position:fixed; right:clamp(20px,4vw,40px); bottom:22px; z-index:55;
-  font-family:var(--mono); font-size:10px; letter-spacing:0.04em;
-  color:var(--muted); text-align:right; pointer-events:none;
-  display:flex; flex-direction:column; gap:4px; min-width:150px;
+  position:fixed; right:clamp(20px,4vw,40px); bottom:24px; z-index:55;
+  display:flex; flex-direction:column; align-items:flex-end; gap:6px;
+  max-width:min(250px, 34vw); text-align:right; pointer-events:none;
+  font-family:var(--serif); line-height:1.2;
   transform:translateZ(0); will-change:transform;
 }
-.hud-row{ display:flex; justify-content:flex-end; gap:10px; }
-.hud-key{ color:rgba(239,234,255,0.35); }
-.hud-val{ color:var(--cream); font-variant-numeric:tabular-nums; }
-#hudUbicacion{ color:var(--magenta-2); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; }
-.hud-bar{ margin-top:4px; height:2px; width:100%; background:rgba(239,234,255,0.12); overflow:hidden; }
-.hud-bar__fill{
-  display:block; height:100%; width:0%;
+.hud-eyebrow{
+  font-family:var(--sans); font-size:9px; letter-spacing:0.24em;
+  text-transform:uppercase; color:rgba(239,234,255,0.45);
+}
+.hud-lugar{
+  max-width:min(250px, 34vw);
+  font-size:17px; color:transparent;
   background:var(--gradient-brand);
-  box-shadow:0 0 8px rgba(245,1,249,0.6);
+  -webkit-background-clip:text;
+  background-clip:text;
+  transition:opacity 0.45s ease;
+}
+.hud-lugar--out{ opacity:0; }
+.hud-rule{
+  width:150px; height:1px; background:rgba(239,234,255,0.18); overflow:hidden;
+}
+.hud-rule__fill{
+  display:block; height:100%; width:0%;
+  background:var(--cream);
 }
 @media (max-width:560px){ .hud-readout{ display:none; } }
 
@@ -215,16 +225,28 @@ section.visible{ opacity:1; transform:none; filter:none; }
 #presentacion{ opacity:1; transform:none; filter:none; }
 
 /* Variantes de entrada por escena y por planchón (par/impar) */
-.planchon:nth-child(odd) section:not(.visible){ transform:translateX(-48px); }
-.planchon:nth-child(even) section:not(.visible){ transform:translateX(48px); }
-section.planchon-intro:not(.visible){ transform:translateY(56px); }
-section.planchon-3d-escena:not(.visible){ transform:scale(0.86); filter:blur(16px); }
+.planchon:nth-child(odd) section:not(.visible):not(.planchon-3d-escena){ transform:translateX(-48px); }
+.planchon:nth-child(even) section:not(.visible):not(.planchon-3d-escena){ transform:translateX(48px); }
+section.planchon-3d-escena:not(.entra-3d){ transform:scale(0.86); filter:blur(16px); }
+section.planchon-3d-escena.entra-3d{ opacity:1; transform:none; filter:none; }
 section.planchon-360-escena:not(.visible){ transform:scale(1.05); }
 section.planchon-360-escena:not(.visible) .planchon-360-btn{ transform:translateY(20px); }
-.planchon:nth-child(even) section.planchon-intro:not(.visible){ transform:translateY(56px); }
+
+/* La entrada del planchón (número + título + tagline) tiene su propia
+   coreografía más abajo y se repite cada vez que entra en pantalla, así que
+   queda fuera del reveal genérico de una sola vez. */
+.planchon-intro{ opacity:1; transform:none; filter:none; transition:none; }
 
 @media (prefers-reduced-motion: reduce){
   section{ filter:none; }
+  section.planchon-3d-escena:not(.entra-3d){ transform:none; }
+  section.planchon-3d-escena .planchon-3d-video,
+  section.planchon-3d-escena .planchon-3d-box::before{
+    opacity:1 !important; transition:none; animation:none; transform:none;
+  }
+  section.planchon-3d-escena .planchon-3d-box::after{
+    animation:none; opacity:0;
+  }
 }
 
 /* ================= 1. Presentación ================= */
@@ -394,8 +416,41 @@ section.planchon-360-escena:not(.visible) .planchon-360-btn{ transform:translate
 .planchon-intro h2{
   font-size:clamp(46px,10vw,110px); margin-top:14px;
   background:var(--gradient-brand); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 18px rgba(245,1,249,0.35));
 }
 .planchon-tagline{ color:var(--muted); margin-top:18px; font-size:clamp(15px,1.6vw,19px); }
+
+/* Entrada de cada planchón: el título llega primero deslizando desde abajo,
+   el número "01/12" aparece justo después con un pequeño retraso, y la
+   tagline cierra la secuencia. Se dispara con la clase .entra (ver main.js),
+   que se agrega y se quita cada vez que la escena entra o sale de pantalla —
+   por eso se repite al subir y bajar, a diferencia del reveal de una sola
+   vez que usan el resto de las secciones. */
+.planchon-intro .eyebrow{
+  opacity:0; transform:translateY(-10px);
+  transition:opacity 0.55s ease, transform 0.55s ease;
+  transition-delay:0.32s;
+}
+.planchon-intro h2{
+  opacity:0; transform:translateY(70px);
+  transition:opacity 0.85s cubic-bezier(.16,.8,.24,1), transform 0.85s cubic-bezier(.16,.8,.24,1);
+}
+.planchon-intro .planchon-tagline{
+  opacity:0; transform:translateY(16px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+  transition-delay:0.5s;
+}
+.planchon-intro.entra .eyebrow,
+.planchon-intro.entra h2,
+.planchon-intro.entra .planchon-tagline{
+  opacity:1; transform:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .planchon-intro .eyebrow, .planchon-intro h2, .planchon-intro .planchon-tagline{
+    opacity:1 !important; transform:none !important; transition:none !important;
+  }
+}
 
 /* 2. Descripción + botón que abre el panel */
 .planchon-descripcion{
@@ -440,13 +495,163 @@ section.planchon-360-escena:not(.visible) .planchon-360-btn{ transform:translate
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
   overflow:hidden;
 }
+.planchon-3d-box{ position:relative; }
 .planchon-3d-video{
   width:min(88vw,900px); border-radius:24px;
   border:1px solid var(--line); box-shadow:0 30px 80px rgba(6,10,30,0.6);
   background:var(--bg-2);
+  opacity:0; transition:opacity 0.8s ease;
 }
+/* Entrada con marco que se construye: al llegar a la escena (.entra-3d, ver
+   main.js) el borde neón se dibuja lado por lado y el glow crece; una vez
+   construido, el video entra con fade dentro. */
+.planchon-3d-box::before{
+  content:'';
+  position:absolute; inset:-12px; border-radius:30px;
+  border:2px solid transparent;
+  background:linear-gradient(120deg, rgba(245,1,249,0.10), rgba(134,38,252,0.04), rgba(73,79,255,0.10));
+  opacity:0; pointer-events:none;
+}
+.planchon-3d-escena.entra-3d .planchon-3d-box::before{
+  animation:construir-marco 1.5s cubic-bezier(.4,0,.2,1) 0s 1 forwards;
+}
+.planchon-3d-escena.entra-3d .planchon-3d-video{
+  opacity:1; transition-delay:1.6s;
+}
+/* Destellos de cámara que cruzan el cuadro justo antes de que entre el video */
+.planchon-3d-box::after{
+  content:'';
+  position:absolute; inset:0; border-radius:24px; z-index:2;
+  opacity:0; pointer-events:none; overflow:hidden;
+  background:linear-gradient(105deg, transparent 42%,
+    rgba(239,234,255,0.5) 47%, rgba(239,234,255,0.9) 50%,
+    rgba(245,1,249,0.6) 52%, transparent 58%);
+  background-size:220% 100%; background-repeat:no-repeat;
+  background-position:120% 0;
+  mix-blend-mode:screen;
+}
+.planchon-3d-escena.entra-3d .planchon-3d-box::after{
+  animation:destello-camara 0.32s ease-out 0.95s 2 forwards;
+}
+@keyframes destello-camara{
+  0%{ opacity:0; background-position:120% 0; }
+  12%{ opacity:1; }
+  88%{ opacity:0.9; background-position:-25% 0; }
+  100%{ opacity:0; background-position:-40% 0; }
+}
+@keyframes construir-marco{
+  0%{
+    opacity:0;
+    border-top-color:transparent; border-right-color:transparent;
+    border-bottom-color:transparent; border-left-color:transparent;
+    box-shadow:0 0 0 rgba(245,1,249,0);
+  }
+  12%{
+    opacity:1;
+    border-top-color:var(--magenta-2);
+  }
+  32%{
+    border-right-color:var(--magenta-2);
+  }
+  52%{
+    border-bottom-color:var(--magenta-2);
+  }
+  72%{
+    border-left-color:var(--magenta-2);
+    box-shadow:0 0 12px rgba(245,1,249,0.55), inset 0 0 12px rgba(245,1,249,0.12);
+  }
+  100%{
+    opacity:1;
+    border-top-color:var(--magenta-2); border-right-color:var(--magenta-2);
+    border-bottom-color:var(--magenta-2); border-left-color:var(--magenta-2);
+    box-shadow:0 0 20px rgba(245,1,249,0.9), inset 0 0 20px rgba(245,1,249,0.28), 0 0 46px rgba(134,38,252,0.65);
+  }
+}
+@keyframes construir-marco-b{
+  0%{
+    opacity:0;
+    border-top-color:transparent; border-right-color:transparent;
+    border-bottom-color:transparent; border-left-color:transparent;
+    box-shadow:0 0 0 rgba(245,1,249,0);
+  }
+  15%{
+    opacity:1;
+    border-top-color:var(--magenta-2); border-left-color:var(--magenta-2);
+  }
+  42%{
+    border-right-color:var(--magenta-2);
+  }
+  70%{
+    border-bottom-color:var(--magenta-2);
+    box-shadow:0 0 12px rgba(245,1,249,0.55), inset 0 0 12px rgba(245,1,249,0.12);
+  }
+  100%{
+    opacity:1;
+    border-top-color:var(--magenta-2); border-right-color:var(--magenta-2);
+    border-bottom-color:var(--magenta-2); border-left-color:var(--magenta-2);
+    box-shadow:0 0 20px rgba(245,1,249,0.9), inset 0 0 20px rgba(245,1,249,0.28), 0 0 46px rgba(134,38,252,0.65);
+  }
+}
+@keyframes construir-marco-c{
+  0%{
+    opacity:0;
+    border-top-color:transparent; border-right-color:transparent;
+    border-bottom-color:transparent; border-left-color:transparent;
+    box-shadow:0 0 0 rgba(245,1,249,0);
+  }
+  14%{
+    opacity:1;
+    border-top-color:var(--magenta-2); border-bottom-color:var(--magenta-2);
+  }
+  38%{
+    border-right-color:var(--magenta-2); border-left-color:var(--magenta-2);
+  }
+  72%{
+    box-shadow:0 0 12px rgba(245,1,249,0.55), inset 0 0 12px rgba(245,1,249,0.12);
+  }
+  100%{
+    opacity:1;
+    border-top-color:var(--magenta-2); border-right-color:var(--magenta-2);
+    border-bottom-color:var(--magenta-2); border-left-color:var(--magenta-2);
+    box-shadow:0 0 20px rgba(245,1,249,0.9), inset 0 0 20px rgba(245,1,249,0.28), 0 0 46px rgba(134,38,252,0.65);
+  }
+}
+@keyframes construir-marco-d{
+  0%{
+    opacity:0; transform:scale(1.14);
+    border-top-color:transparent; border-right-color:transparent;
+    border-bottom-color:transparent; border-left-color:transparent;
+    box-shadow:0 0 0 rgba(245,1,249,0);
+  }
+  30%{
+    opacity:1; transform:scale(1.05);
+    border-top-color:var(--magenta-2); border-right-color:var(--magenta-2);
+    border-bottom-color:var(--magenta-2); border-left-color:var(--magenta-2);
+    box-shadow:0 0 10px rgba(245,1,249,0.45), inset 0 0 10px rgba(245,1,249,0.10);
+  }
+  100%{
+    opacity:1; transform:scale(1);
+    border-top-color:var(--magenta-2); border-right-color:var(--magenta-2);
+    border-bottom-color:var(--magenta-2); border-left-color:var(--magenta-2);
+    box-shadow:0 0 20px rgba(245,1,249,0.9), inset 0 0 20px rgba(245,1,249,0.28), 0 0 46px rgba(134,38,252,0.65);
+  }
+}
+/* Variedad en la construcción del marco neon (cuatro sensaciones distintas):
+   A: barrido horario lado-por-lado, empieza arriba (01, 05, 09)
+   B: esquina L superior-izquierda → cierra de derecha a abajo (02, 06, 10)
+   C: espejo arriba+abajo simultáneos, luego los lados (03, 07, 11)
+   D: bloom desde el centro con escala (04, 08, 12) */
+#planchon-02 .planchon-3d-box::before,
+#planchon-06 .planchon-3d-box::before,
+#planchon-10 .planchon-3d-box::before{ animation-name:construir-marco-b; }
+#planchon-03 .planchon-3d-box::before,
+#planchon-07 .planchon-3d-box::before,
+#planchon-11 .planchon-3d-box::before{ animation-name:construir-marco-c; }
+#planchon-04 .planchon-3d-box::before,
+#planchon-08 .planchon-3d-box::before,
+#planchon-12 .planchon-3d-box::before{ animation-name:construir-marco-d; }
 .planchon-3d-caption{ text-align:center; }
-.planchon-3d-caption h3{ font-size:clamp(24px,3.4vw,36px); margin:10px 0 8px; }
+.planchon-3d-caption h3{ font-size:clamp(24px,3.4vw,36px); margin:10px 0 8px; text-shadow:0 0 18px rgba(245,1,249,0.30); }
 .planchon-3d-caption p{ color:var(--muted); }
 
 /* Variante sin video todavía: escena normal de una sola pantalla, sin pin */
