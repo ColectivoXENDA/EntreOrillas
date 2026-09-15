@@ -1,0 +1,8 @@
+# Carpeta con la plantilla original + assets sin procesar del cliente
+# (ya integrados en el proyecto; se conserva localmente como referencia,
+# no hace falta duplicarla en el repo — son ~460MB, la mayoría video crudo
+# ya comprimido en assets/videos/).
+nuevo/
+
+# Config local de la herramienta de IA usada en el desarrollo.
+.claude/

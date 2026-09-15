@@ -1,928 +1,146 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Entre Orillas</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.cdnfonts.com/css/varino" rel="stylesheet"/>
-<link href="css/style.css?v=3" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+<meta name="theme-color" content="#060A1E">
+<title>Entre Orillas — El río que nos mueve</title>
+<meta name="description" content="Ruta turística y cultural interactiva por los doce planchones del río Sinú en Montería. Una ruta por la memoria, la identidad y la vida del río.">
+
+<!-- Open Graph: la ruta se comparte por QR y por redes -->
+<meta property="og:title" content="Entre Orillas — El río que nos mueve">
+<meta property="og:description" content="Los doce planchones que conectan las dos márgenes del río Sinú en Montería.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Jost:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Sin GSAP/ScrollTrigger: el pineado lo hace `position: sticky` nativo,
+     y script.js trae su propio motor de progreso (ver "MOTOR DE SCROLL
+     NATIVO" dentro del archivo). -->
+
+<link rel="stylesheet" href="styles.css">
+<script src="image-slot.js"></script>
 </head>
 <body>
-<div aria-hidden="true" class="loader" id="loader">
-<img alt="" class="loader-logo" src="assets/img/ISOTIPO.png"/>
-</div>
-<div aria-hidden="true" class="particles-global" id="particles"></div>
-<header class="site-header">
-<a aria-label="Entre Orillas, inicio" class="brand" href="#presentacion">
-<img alt="Entre Orillas" class="brand-logo" src="assets/img/ISOTIPO.png"/>
-</a>
-<div class="header-actions">
-<button aria-pressed="false" class="icon-btn" id="soundToggle" title="Sonido ambiental del río" type="button">
-<svg class="icon-btn__on" aria-hidden="true" viewbox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"></path><path d="M16.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"></path><path d="M19 6a9 9 0 0 1 0 12" fill="none" opacity="0.6" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"></path></svg>
-<svg class="icon-btn__off" aria-hidden="true" viewbox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="currentColor"></path><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"></path></svg>
-<span class="sr-only">Sonido ambiental del río</span>
-</button>
-<button aria-pressed="false" class="icon-btn icon-btn--text" id="readableToggle" title="Texto legible (accesibilidad)" type="button">
-      Aa
-      <span class="sr-only">Activar texto legible</span>
-</button>
-<button aria-pressed="false" class="icon-btn" id="infoToggle" title="Información de la página" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.6"></circle><rect fill="currentColor" height="6.5" rx="0.9" width="1.8" x="11.1" y="10.5"></rect><circle cx="12" cy="7.6" fill="currentColor" r="1.15"></circle></svg>
-<span class="sr-only">Información de la página</span>
-</button>
-</div>
-</header>
-<nav aria-hidden="true" class="river-map" id="riverMap">
-<svg preserveaspectratio="xMidYMid meet" viewbox="0 0 90 620">
-<path class="river-track" d="M52,10 C22,90 78,160 46,240 C16,320 72,390 42,470 C22,530 56,570 44,610" id="riverTrack"></path>
-<path class="river-progress" d="M52,10 C22,90 78,160 46,240 C16,320 72,390 42,470 C22,530 56,570 44,610" id="riverProgress"></path>
-<g id="riverNodes"></g>
-</svg>
-</nav>
-<div aria-hidden="true" class="hud-readout" id="hudReadout">
-<span class="hud-eyebrow">Ruta del Sinú</span>
-<span class="hud-lugar" id="hudUbicacion">Presentación</span>
-<span class="hud-rule"><span class="hud-rule__fill" id="hudBarFill"></span></span>
-</div>
-<main id="recorrido">
-<!-- 1. Presentación -->
-<section id="presentacion">
-<span class="eyebrow">Ruta turística y cultural</span>
-<img alt="Entre Orillas — El río que nos mueve" class="logo-hero" src="assets/img/logo-entre-orillas.png"/>
-<p class="descripcion">
-      Una ruta turística y cultural que invita a recorrer los doce planchones
-      que conectan las márgenes del río Sinú en Montería, descubriendo cómo
-      cada uno ha construido su propia identidad a partir de su nombre, sus
-      colores, su gente y su relación con el territorio.
-    </p>
-<div aria-hidden="true" class="scroll-indicator">
-<span class="scroll-indicator__mouse"><span class="scroll-indicator__dot"></span></span>
-<span class="scroll-indicator__label">Desliza para comenzar</span>
-</div>
-</section>
-<!-- 2-4. Puente, origen y vida en las orillas: comparten el video que avanza con el scroll -->
-<div id="escena-video">
-<div aria-hidden="true" class="clip-stage" id="clipStage">
-<video class="clip-video" id="clipPrincipal" muted="" playsinline="" preload="auto">
-<source src="assets/videos/CLIP%20PRINCIPAL-optimizado.mp4" type="video/mp4"/>
-</video>
-<div class="clip-overlay"></div>
-</div>
-<!-- 2. Introducción (Puente Gustavo Rojas Pinilla) -->
-<section id="introduccion">
-<span class="eyebrow">El punto de partida</span>
-<h2>Puente Gustavo Rojas Pinilla</h2>
-<p>
-      Desde aquí comienza el recorrido: el tramo del río Sinú entre el puente
-      metálico y el puente Segundo Centenario, donde los planchones conectan
-      las dos orillas de Montería desde hace generaciones.
-    </p>
-</section>
-<!-- 3. El origen de los planchones -->
-<section id="origen">
-<span class="eyebrow">Antes de zarpar</span>
-<h2>El origen de los planchones</h2>
-<p class="planchon-resumen">
-      Los planchones nacieron de una necesidad ganadera: cruzar animales entre
-      las dos orillas del Sinú. La idea del primer planchón, ideada por un
-      campesino conocido como el señor Pello, se convirtió con los años en una
-      tradición transmitida de generación en generación.
-    </p>
-<button class="planchon-toggle" type="button" aria-expanded="false" aria-controls="panel-origen">Saber más</button>
-</section>
 
-<aside class="planchon-panel" id="panel-origen" aria-hidden="true">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Antes de zarpar</h3>
-<p>
-      Los planchones forman parte de la historia y de la identidad de Montería.
-      Su origen está ligado a las necesidades de las comunidades que habitaban
-      las orillas del río Sinú y, especialmente, a la actividad ganadera que
-      durante años ha sido fundamental para la economía de Córdoba.
-    </p>
-<p>
-      En sus primeros años, el río representaba una dificultad para quienes
-      necesitaban trasladar ganado y otros animales entre sus dos márgenes.
-      La margen izquierda de Montería era, en aquel entonces, una extensa zona
-      de fincas y áreas rurales, mientras que en la margen derecha se
-      encontraba el mercado público. Para los habitantes de estas comunidades,
-      cruzar el río era una necesidad cotidiana.
-    </p>
-<p>
-      Fue en este contexto cuando surgió la idea del primer planchón de la
-      ciudad. De acuerdo con el relato de Carlos Andrés Tordecilla, nieto de su
-      creador, un campesino conocido como el señor Pello imaginó la
-      embarcación directamente sobre la tierra húmeda, utilizando como
-      herramienta improvisada una varita de palo de limón. Posteriormente
-      plasmó su idea en una hoja y se la presentó al señor González, quien
-      contaba con los recursos necesarios para hacerla realidad. La propuesta
-      fue construida y, al comprobar que funcionaba, comenzó a extenderse
-      por la ciudad.
-    </p>
-<p>
-      El primer planchón, conocido como "Planchón de la 33", fue construido
-      inicialmente para facilitar el traslado del ganado. Según Edwin
-      Tordecilla, trabajador de este planchón, antes de su existencia el
-      crecimiento del río podía arrastrar a los animales mientras intentaban
-      cruzarlo. La solución fue construir una estructura de tablas que
-      permitiera realizar el cruce de manera más segura.
-    </p>
-<p>
-      Con el paso del tiempo, los planchones dejaron de transportar únicamente
-      animales y comenzaron a convertirse en un medio de movilidad para los
-      habitantes de Montería. Su funcionamiento es particular: no necesitan
-      motor, pues aprovechan la corriente del río Sinú para desplazarse,
-      mientras un trabajador controla su dirección mediante una guaya que
-      atraviesa el río.
-    </p>
-<p>
-      Así, lo que comenzó como una solución para las necesidades de una
-      comunidad ganadera terminó convirtiéndose en una tradición que ha
-      pasado de generación en generación. Familias como la de Hernán
-      Martínez han mantenido esta actividad durante décadas; su familia lleva
-      más de 40 años vinculada al planchón "El Canario", construido por su
-      padre en 1978.
-    </p>
-<p>
-      Actualmente, los planchones continúan conectando las dos márgenes del
-      río Sinú y ofrecen a los monterianos una alternativa de transporte
-      económica, además de convertirse en un atractivo para quienes visitan
-      la ciudad. Cada uno posee un nombre y características propias, haciendo
-      de estas embarcaciones artesanales mucho más que un medio para cruzar
-      el río: son parte de la memoria, la economía y la identidad de Montería.
-    </p>
-</div>
-</aside>
-<!-- 4. La vida en las orillas -->
-<section id="vida-en-las-orillas">
-<span class="eyebrow">En el trayecto</span>
-<h2>La vida en las orillas</h2>
-<p>
-      Alrededor de cada planchón se desarrolla una vida que va más allá del
-      cruce: comercio, gastronomía, encuentros y oficios tradicionales
-      conviven en las orillas del Sinú.
-    </p>
-<div id="galeria-orillas">
-<img alt="Comercio en la orilla" src=""/>
-<img alt="El cruce cotidiano" src=""/>
-<img alt="Oficios del río" src=""/>
-<img alt="Encuentros de orilla a orilla" src=""/>
-</div>
-</section>
-</div>
-<!-- 5. Info de cada planchón (12) -->
-<div id="planchones">
-<article class="planchon" id="planchon-01">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">01 / 12</span>
-<h2>La Esmeralda</h2>
-<p class="planchon-tagline">Una identidad que se reconoce</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>La Esmeralda</h3>
-<p class="planchon-resumen">
-            Una identidad que se reconoce: un color propio que la distingue con
-            facilidad en el recorrido.
-          </p>
-<button aria-controls="panel-planchon-01" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-01">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>La Esmeralda se distingue por su identidad visual: nombre y colores la hacen fácil de reconocer y muestran cómo cada embarcación construye una imagen propia en la memoria del río.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y dimensiones documentan sus características físicas, junto con el modelo 3D que permite explorarla desde todas las perspectivas.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros y pasajeros dan vida al lugar; fotografías, frases y entrevistas ponen en primer plano sus historias y su relación con el río.</p>
-<h3>El río</h3>
-<p>Desde La Esmeralda el río se vive de cerca: paisaje, agua, orillas y sonidos forman parte del trayecto cotidiano entre las dos márgenes.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>A su alrededor crecen el comercio, la gastronomía y los encuentros que muestran cómo se habita la orilla más allá del cruce.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que su nombre y sus colores están ligados a la apariencia del planchón, lo que permite reconocerlo fácilmente dentro del recorrido?</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D: gira con el scroll, frame por frame -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LA%20ESMERALDA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>La Esmeralda</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de La Esmeralda.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-02">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">02 / 12</span>
-<h2>La 26</h2>
-<p class="planchon-tagline">Una conexión directa con el territorio</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>La 26</h3>
-<p class="planchon-resumen">
-            Una conexión directa con el territorio: el nombre de esta embarcación se relaciona con el barrio que la rodea.
-          </p>
-<button aria-controls="panel-planchon-02" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-02">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>La 26 se relaciona directamente con la calle 26: su nombre conecta la embarcación con el barrio que la rodea y la identifica dentro de la red de planchones.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y dimensiones registran sus características físicas y permiten documentar su estado actual, acompañados del modelo 3D para recorrerla digitalmente.</p>
-<h3>Su gente</h3>
-<p>Quienes trabajan en La 26 forman parte de su historia: entrevistas y retratos recuperan sus voces y muestran qué significa trabajar cada día sobre el río.</p>
-<h3>El río</h3>
-<p>Desde La 26 se observa cómo el paisaje se transforma entre las orillas: agua, sonidos y movimiento convierten cada cruce en una experiencia cotidiana del lugar.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>El comercio, la gastronomía y los encuentros alrededor del embarcadero muestran que el río también es un espacio social y habitado.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que el nombre de La 26 hace referencia directa a la calle 26, estableciendo una conexión entre la embarcación y el territorio que la rodea?</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LA%2026%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>La 26</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de La 26.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-03">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">03 / 12</span>
-<h2>El Minuto de Dios</h2>
-<p class="planchon-tagline">Trabajo, territorio y sustento</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>El Minuto de Dios</h3>
-<p class="planchon-resumen">
-            Trabajo, territorio y sustento: un planchón que lleva el nombre de su barrio y sostiene la economía de muchas familias.
-          </p>
-<button aria-controls="panel-planchon-03" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-03">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>El Minuto de Dios conecta la vida del río con el barrio que le da nombre: un espacio de trabajo y sustento para muchas familias de la orilla.</p>
-<h3>Técnica</h3>
-<p>El registro técnico documenta su estructura, materiales y dimensiones a través de planos y fotografías, complementados con el modelo 3D para explorarlo desde todas las perspectivas.</p>
-<h3>Su gente</h3>
-<p>Quienes trabajan en El Minuto de Dios son el centro de este planchón: sus historias muestran el oficio desde una mirada humana y su relación de vida con el río.</p>
-<h3>El río</h3>
-<p>El río acompaña cada jornada: paisaje, movimiento del agua y sonidos construyen la experiencia particular de quienes realizan el cruce.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Comercio, gastronomía y encuentros alrededor del embarcadero muestran cómo se habita la orilla más allá del momento de cruzar.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que su nombre está relacionado con el sector donde se encuentra? Así, planchón y territorio se reconocen mutuamente.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/MINUTO%20DE%20DIOS%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>El Minuto de Dios</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de El Minuto de Dios.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-04">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">04 / 12</span>
-<h2>La Estrella del Sinú</h2>
-<p class="planchon-tagline">Una expresión sobre el agua</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>La Estrella del Sinú</h3>
-<p class="planchon-resumen">
-            Una expresión sobre el agua: los detalles ornamentales convierten a este planchón en una pieza singular del paisaje.
-          </p>
-<button aria-controls="panel-planchon-04" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-04">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su ornamento y forma la convierten en una pieza singular dentro del paisaje, mostrando que una estructura cotidiana puede desarrollar identidad propia.</p>
-<h3>Técnica</h3>
-<p>Planos, cortes, fotografías y modelo 3D documentan su configuración arquitectónica y permiten explorarla en detalle.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros comparten historias y oficio; entrevistas y retratos recuperan sus voces.</p>
-<h3>El río</h3>
-<p>Desde la embarcación se observan ambas orillas y el paisaje en movimiento sobre el agua.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Gastronomía, comercio y encuentros en la orilla muestran la vida cotidiana alrededor del planchón.</p>
-<h3>¿Sabías que...?</h3>
-<p>Su nombre está ligado a elementos ornamentales que la hacen reconocible; la creatividad también habita en lo cotidiano.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LA%20ESTRELLA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>La Estrella del Sinú</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de La Estrella del Sinú.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-05">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">05 / 12</span>
-<h2>La Bala del Sinú</h2>
-<p class="planchon-tagline">Movimiento entre orillas</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>La Bala del Sinú</h3>
-<p class="planchon-resumen">
-            Movimiento entre orillas: la velocidad de su cruce da nombre a esta embarcación.
-          </p>
-<button aria-controls="panel-planchon-05" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-05">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>La velocidad de su cruce le da nombre; el río se vive desde el movimiento continuo entre las dos márgenes.</p>
-<h3>Técnica</h3>
-<p>Forma, dimensiones y materiales quedan registrados en planos y fotografías, ampliados con el modelo 3D.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros convierten el movimiento en cotidianidad; sus testimonios mantienen viva la memoria del recorrido.</p>
-<h3>El río</h3>
-<p>Viento, motor y agua acompañan cada cruce: la experiencia del río se percibe a través del movimiento.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Esperar el cruce, vender, comprar y encontrarse son acciones que componen la vida de la orilla.</p>
-<h3>¿Sabías que...?</h3>
-<p>Su nombre refleja la rapidez que perciben quienes cruzan cada día; velocidad y memoria van juntas.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LA%20BALA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>La Bala del Sinú</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de La Bala del Sinú.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-06">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">06 / 12</span>
-<h2>Dinastía Tordecilla</h2>
-<p class="planchon-tagline">Una historia que continúa</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>Dinastía Tordecilla</h3>
-<p class="planchon-resumen">
-            Una historia que continúa: el oficio transmitido de generación en generación.
-          </p>
-<button aria-controls="panel-planchon-06" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-06">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre remite a continuidad familiar: un oficio que se transmite de generación en generación en las orillas del Sinú.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y el modelo 3D conservan su registro constructivo y su imagen dentro del paisaje del río.</p>
-<h3>Su gente</h3>
-<p>La memoria del oficio está en quienes lo practican y lo transmiten; sus voces muestran la historia detrás del planchón.</p>
-<h3>El río</h3>
-<p>El río es el escenario de este oficio permanente; sus paisajes y sonidos acompañan cada jornada.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Comercio, gastronomía y encuentros se alternan con el trabajo del planchón, componiendo un paisaje humano vivo.</p>
-<h3>¿Sabías que...?</h3>
-<p>"Dinastía" alude a la transmisión familiar; el nombre abre una mirada hacia el vínculo entre familia, oficio y memoria.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/DINASTIA%20TORDECILLA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>Dinastía Tordecilla</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de Dinastía Tordecilla.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-07">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">07 / 12</span>
-<h2>El Canario</h2>
-<p class="planchon-tagline">Un lugar para escuchar</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>El Canario</h3>
-<p class="planchon-resumen">
-            Un lugar para escuchar: el paisaje sonoro de las aves define la identidad de este cruce.
-          </p>
-<button aria-controls="panel-planchon-07" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-07">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre proviene de los sonidos de aves que se escuchan en su entorno; aquí el paisaje sonoro es la identidad.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y el modelo 3D documentan su configuración y permiten explorarla en detalle.</p>
-<h3>Su gente</h3>
-<p>Los planchoneros comparten sus experiencias y su relación cotidiana con el río; retratos y testimonios dan voz a su historia.</p>
-<h3>El río</h3>
-<p>Escuchar el agua, las aves y los sonidos de la orilla permite descubrir una dimensión del río que a veces pasa desapercibida.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Comercio, gastronomía y encuentros diarios muestran la vida que crece alrededor del embarcadero.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que su nombre proviene de los pájaros del entorno? Escuchar el lugar se convierte en una forma de reconocerlo.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/EL%20CANARIO%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>El Canario</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de El Canario.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-08">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">08 / 12</span>
-<h2>Los 2 Hermanos</h2>
-<p class="planchon-tagline">Familia y memoria</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>Los 2 Hermanos</h3>
-<p class="planchon-resumen">
-            Familia y memoria: un nombre que revela los lazos familiares detrás del oficio.
-          </p>
-<button aria-controls="panel-planchon-08" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-08">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre revela un vínculo familiar detrás del oficio; la memoria humana forma parte de la historia de este espacio del río.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y el modelo 3D registran su estructura y conservan un registro digital de la embarcación.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros cuentan historias de vida y vínculos con el oficio; testimonios y retratos hacen visible su memoria.</p>
-<h3>El río</h3>
-<p>Paisaje, movimiento y sonidos acompañan cada jornada; el río es el escenario permanente del trabajo y del cruce.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Esperar, conversar, comprar y vender son acciones cotidianas que construyen la identidad de la orilla.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que "Los 2 Hermanos" refleja un lazo familiar? Un nombre sencillo abre la puerta a historias humanas.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LOS%202%20HERMANOS%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>Los 2 Hermanos</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de Los 2 Hermanos.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-09">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">09 / 12</span>
-<h2>El Colombiano</h2>
-<p class="planchon-tagline">Los colores de una identidad</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>El Colombiano</h3>
-<p class="planchon-resumen">
-            Los colores de una identidad: una embarcación que lleva los símbolos patrios como sello distintivo.
-          </p>
-<button aria-controls="panel-planchon-09" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-09">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Sus colores e identidad visual la hacen reconocible; referencias a Colombia muestran cómo lo local se conecta con lo nacional.</p>
-<h3>Técnica</h3>
-<p>Planos, dimensiones y fotografías documentan su estructura, junto con el modelo 3D para explorarla en detalle.</p>
-<h3>Su gente</h3>
-<p>Quienes trabajan en El Colombiano son parte fundamental de su identidad; sus testimonios muestran el oficio cotidiano.</p>
-<h3>El río</h3>
-<p>Desde el movimiento entre orillas se transforma el paisaje; agua, sonidos y personas construyen la experiencia.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Gastronomía, comercio y encuentros alrededor del embarcadero muestran cómo se habita la orilla del río.</p>
-<h3>¿Sabías que...?</h3>
-<p>¿Sabías que sus colores y elementos visuales permiten distinguirlo fácilmente dentro del recorrido por el río?</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/EL%20COLOMBIANO%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>El Colombiano</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de El Colombiano.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-10">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">10 / 12</span>
-<h2>Pompeya</h2>
-<p class="planchon-tagline">Un oficio sobre el río</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>Pompeya</h3>
-<p class="planchon-resumen">
-            Un oficio sobre el río: el trabajo diario del planchonero como eje de esta travesía.
-          </p>
-<button aria-controls="panel-planchon-10" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-10">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre lleva la idea de un oficio sobre el río; cada jornada, el planchonero conecta personas y territorios.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías y el modelo 3D registran su configuración actual y permiten recorrerla digitalmente.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros cuentan historias de vida y vínculos con el oficio; sus palabras muestran la memoria humana del río.</p>
-<h3>El río</h3>
-<p>Sus cambios, sonidos y paisajes forman parte de una experiencia que se repite pero nunca se repite igual.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Comercio, gastronomía y encuentros alrededor del embarcadero acompañan la dinámica de cada jornada.</p>
-<h3>¿Sabías que...?</h3>
-<p>Detrás de cada cruce existe un oficio que depende del conocimiento y la experiencia de quienes trabajan directamente sobre el río.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/POMPEYA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>Pompeya</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de Pompeya.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-11">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">11 / 12</span>
-<h2>El Rey David</h2>
-<p class="planchon-tagline">Fe, identidad y tradición</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>El Rey David</h3>
-<p class="planchon-resumen">
-            Fe, identidad y tradición: un planchón cuyo nombre revela cómo las creencias también forman parte de la vida junto al río.
-          </p>
-<button aria-controls="panel-planchon-11" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-11">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre guarda una referencia religiosa, mostrando que las creencias también habitan la vida cotidiana del río.</p>
-<h3>Técnica</h3>
-<p>Planos, dimensiones y fotografías documentan su estructura; el modelo 3D complementa este registro desde distintas perspectivas.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros aportan voces, memorias y experiencias que hacen visible el valor humano detrás de cada cruce.</p>
-<h3>El río</h3>
-<p>Cada recorrido permite observar el paisaje, escuchar los sonidos y descubrir el río desde una mirada sensorial.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Gastronomía, comercio y encuentros en la orilla muestran formas de habitar el espacio cotidiano del planchón.</p>
-<h3>¿Sabías que...?</h3>
-<p>Su nombre proviene de una referencia religiosa; las creencias forman parte de la identidad de este punto del río.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/El%20Rey%20David%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>El Rey David</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de El Rey David.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-<article class="planchon" id="planchon-12">
-<!-- 1. Introducción al planchón -->
-<section class="planchon-intro">
-<span class="eyebrow">12 / 12</span>
-<h2>La Bonga N.º 1</h2>
-<p class="planchon-tagline">El origen de la ruta</p>
-</section>
-<!-- 2. Descripción (con panel "Ver más" que se desliza del lado contrario) -->
-<section class="planchon-descripcion">
-<div class="descripcion-texto">
-<span class="eyebrow">Conoce el planchón</span>
-<h3>La Bonga N.º 1</h3>
-<p class="planchon-resumen">
-            El origen de la ruta: un embarcadero de la margen izquierda que toma su nombre de la bonga que lo distingue en el paisaje.
-          </p>
-<button aria-controls="panel-planchon-12" aria-expanded="false" class="planchon-toggle" type="button">Ver más</button>
-</div>
-</section>
-<aside aria-hidden="true" class="planchon-panel" id="panel-planchon-12">
-<button aria-label="Cerrar panel" class="planchon-panel-cerrar icon-btn" type="button">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg>
-</button>
-<div class="planchon-panel-contenido">
-<h3>Conoce el planchón</h3>
-<p>Su nombre viene de la bonga en el embarcadero de la margen izquierda; un elemento del entorno que se convirtió en referencia.</p>
-<h3>Técnica</h3>
-<p>Planos, fotografías, renders y el modelo 3D documentan su configuración actual y conservan una memoria digital.</p>
-<h3>Su gente</h3>
-<p>Sus planchoneros comparten oficio, memorias y relaciones cotidianas con el río; sus voces muestran la vida detrás del cruce.</p>
-<h3>El río</h3>
-<p>Desde La Bonga N.º 1, el cruce se convierte en una experiencia de paisaje, movimiento y sonido que cambia cada día.</p>
-<h3>Costumbres y vida cotidiana</h3>
-<p>Embarcadero y alrededores son espacios de paso, encuentro y trabajo que forman parte de la vida diaria.</p>
-<h3>¿Sabías que...?</h3>
-<p>Una bonga ubicada en el embarcadero dio nombre al planchón; así, el entorno se convierte en identidad.</p>
-</div>
-</aside>
-<!-- 3. Modelo 3D -->
-<section class="planchon-3d-escena">
-<div class="planchon-3d-sticky">
-<div class="planchon-3d-box">
-<video class="planchon-3d-video" muted="" playsinline="" preload="auto">
-<source src="assets/videos/LA%20BONGA%203D.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="planchon-3d-caption">
-<span class="eyebrow">Modelo 3D</span>
-<h3>La Bonga N.º 1</h3>
-<p>Gira el planchón con el scroll para explorarlo desde todos los ángulos.</p>
-</div>
-</div>
-</section>
-<!-- 4. 360°: sección definida para cuando exista el video 360 -->
-<section class="planchon-360-escena">
-<span class="eyebrow">Vista 360°</span>
-<h3>Explorar el planchón</h3>
-<p>Próximamente: una experiencia 360° para recorrer el interior de La Bonga N.º 1.</p>
-<button class="planchon-360-btn" disabled="" type="button">Explorar el planchón</button>
-</section>
-</article>
-</div>
-<!-- 6. Cierre -->
-<section id="cierre">
-<img alt="Mapa del recorrido de los planchones sobre el Río Sinú" src="assets/img/mapa.png"/>
-<span class="eyebrow">Fin del recorrido</span>
-<p>
-      Después de recorrer los doce planchones, Entre Orillas propone mirar
-      nuevamente el río Sinú. Lo que al comienzo podía parecer un simple
-      recorrido de un punto a otro se revela como una experiencia construida
-      por personas, oficios, sonidos, paisajes, costumbres y formas de habitar
-      las orillas.
-    </p>
-<p>
-      Cada planchón tiene una identidad propia: algunos se reconocen por sus
-      nombres, otros por sus colores, sus historias, sus familias, sus sonidos o
-      sus características. Sin embargo, todos forman parte de una misma red
-      que conecta territorios y comunidades y que continúa haciendo del río
-      un espacio de encuentro.
-    </p>
-<p><strong>Entre Orillas invita a cruzar el río con una mirada diferente: reconocer que, entre una orilla y otra, también viajan historias, memorias y formas de vida.</strong></p>
-</section>
-</main>
-<div class="planchon-panel-scrim" id="planchonPanelScrim"></div>
-<script src="js/main.js"></script>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <div class="video-stack" id="globalStack" aria-hidden="true"></div>
+
+  <main id="main" class="scroll-track"></main>
+
+  <div class="fg-layer" id="fgLayer" aria-hidden="true">
+    <div class="fg-particles" id="fgParticles"></div>
+    <div class="fg-grain"></div>
+    <div class="fg-vignette"></div>
+  </div>
+
+  <header class="site-header">
+    <a href="#recorrido" class="brand" id="brandLink" aria-label="Entre Orillas, inicio del recorrido">
+      <img class="brand__logo" id="brandLogo" alt="Entre Orillas" hidden>
+      <span class="brand__fallback" id="brandFallback">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__type">Entre&nbsp;Orillas</span>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <button id="soundToggle" class="icon-btn" type="button" aria-pressed="false" title="Activar el paisaje sonoro del río">
+        <span class="icon-btn__on" aria-hidden="true">🔊</span>
+        <span class="icon-btn__off" aria-hidden="true">🔇</span>
+        <span class="sr-only">Paisaje sonoro del río</span>
+      </button>
+      <button id="mapToggle" class="icon-btn icon-btn--map" type="button" aria-pressed="false" aria-controls="riverMap" title="Mapa del recorrido">
+        <span aria-hidden="true">⌖</span>
+        <span class="sr-only">Mapa del recorrido</span>
+      </button>
+      <button id="a11yToggle" class="icon-btn icon-btn--text" type="button" aria-pressed="false" title="Cambiar a modo accesible: interfaz simplificada con lectura en voz alta">
+        <span class="icon-btn__lbl-long">Modo accesible</span>
+        <span class="icon-btn__lbl-short" aria-hidden="true">A11Y</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="river-map" id="riverMap" aria-label="Mapa del recorrido">
+    <div class="river-map__head">
+      <span class="river-map__title">Los 12 planchones</span>
+      <button class="river-map__close" id="mapClose" type="button" aria-label="Cerrar el mapa">✕</button>
+    </div>
+    <div class="river-map__canvas">
+      <svg viewBox="0 0 90 620" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <path id="riverTrack" class="river-track"
+              d="M45,10 C18,70 72,120 45,180 C18,240 72,290 45,350 C18,410 72,455 45,510 C30,545 52,585 45,610" />
+        <path id="riverProgress" class="river-progress"
+              d="M45,10 C18,70 72,120 45,180 C18,240 72,290 45,350 C18,410 72,455 45,510 C30,545 52,585 45,610" />
+        <g id="riverNodes"></g>
+      </svg>
+      <ul class="river-list" id="riverList"></ul>
+    </div>
+  </nav>
+
+  <div class="hud-readout" id="hudReadout" aria-hidden="true">
+    <div class="hud-row"><span class="hud-key">COORD</span><span class="hud-val" id="hudCoords">—</span></div>
+    <div class="hud-row"><span class="hud-key">ALT</span><span class="hud-val"><span id="hudAlt">0</span> m</span></div>
+    <div class="hud-row"><span class="hud-key">RUTA</span><span class="hud-val"><span id="hudProgress">0</span>%</span></div>
+    <div class="hud-bar"><span class="hud-bar__fill" id="hudBarFill"></span></div>
+  </div>
+
+  <div class="stop-label" id="stopLabel" aria-live="polite"></div>
+
+  <section class="a11y-view" id="a11yView" hidden aria-label="Entre Orillas, versión accesible">
+    <div class="a11y-bar">
+      <p class="a11y-bar__lead">
+        Versión simplificada, sin video ni animación. El contenido se puede leer en voz alta.
+      </p>
+      <div class="a11y-bar__controls">
+        <button id="a11yPlay" type="button" aria-pressed="false">
+          <span class="a11y-play-icon" aria-hidden="true">▶</span> Reproducir en voz alta
+        </button>
+        <button id="a11yStop" type="button">Detener</button>
+        <button id="a11yPrev" type="button">← Anterior</button>
+        <button id="a11yNext" type="button">Siguiente →</button>
+      </div>
+      <p class="a11y-bar__status" id="a11yStatus" aria-live="polite"></p>
+    </div>
+    <nav class="a11y-toc" id="a11yToc" aria-label="Ir a una sección"></nav>
+    <div class="a11y-content" id="a11yContent" tabindex="-1"></div>
+  </section>
+
+  <audio id="riverAudio" loop preload="none"></audio>
+
+  <div class="plan-detail" id="planDetail" hidden role="dialog" aria-modal="true" aria-label="Ficha ampliada del planchón">
+    <button class="plan-detail__close" id="planDetailClose" type="button">
+      <span aria-hidden="true">✕</span> Cerrar
+    </button>
+    <div class="plan-detail__body" id="planDetailBody"></div>
+  </div>
+
+  <template id="wireTpl">
+    <svg class="wire" viewBox="0 0 400 220" aria-hidden="true">
+      <g class="wire-g">
+        <path class="wire-path" d="M40,150 L360,150 L340,182 L60,182 Z" />
+        <path class="wire-path" d="M40,150 L360,150" />
+        <path class="wire-path" d="M70,150 L70,84" />
+        <path class="wire-path" d="M150,150 L150,74" />
+        <path class="wire-path" d="M250,150 L250,74" />
+        <path class="wire-path" d="M330,150 L330,84" />
+        <path class="wire-path" d="M55,86 L200,52 L345,86" />
+        <path class="wire-path" d="M200,52 L200,64" />
+        <path class="wire-path" d="M55,86 L345,86" />
+        <path class="wire-path" d="M40,128 L360,128" />
+        <path class="wire-path" d="M110,128 L110,150" />
+        <path class="wire-path" d="M190,128 L190,150" />
+        <path class="wire-path" d="M290,128 L290,150" />
+        <circle class="wire-path wire-ring" cx="100" cy="140" r="9" />
+        <circle class="wire-path wire-ring" cx="300" cy="140" r="9" />
+        <path class="wire-path wire-water" d="M14,196 L386,196" />
+      </g>
+    </svg>
+  </template>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
